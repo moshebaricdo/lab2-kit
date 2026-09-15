@@ -13,8 +13,8 @@ workspace).
 
 | Route | Name | Export |
 | --- | --- | --- |
-| `/levels/sketchlab` | Sketch Lab Level | `SketchLabLevelPage` |
-| `/levels/sketchlab-blank` | Standalone Project (Blank) | `SketchLabBlankProjectLevelPage` |
+| `/levels/sketchlab` | Sketch Lab Level (in-curriculum, empty canvas + instructions) | `SketchLabLevelPage` |
+| `/levels/sketchlab-blank` | Standalone Project (no instructions, collapsible resource panel) | `SketchLabBlankProjectLevelPage` |
 | `/levels/progression-backpack-labs-sketch` | Backpack Across Labs · Sketch | `BackpackCrossLabSketchLevelPage` |
 
 Registered in `src/App.tsx`, listed under **Lab environments** in
@@ -75,7 +75,7 @@ matching the Figma toolbar permutations:
 reset). **Lines are nodes** (`type: "line"`), not React Flow edges — each line has
 start/end endpoint handles and optional attachments to shape/text/image handles.
 Selection is derived from `node.selected`. The canvas is persisted to
-`sessionStorage` under `sketchlab:<route>:canvas` (mirrors `useFileWorkspaceState`).
+`sessionStorage` under `sketchlab:<route>:canvas:v2` (mirrors `useFileWorkspaceState`).
 Legacy saved canvases that still include an `edges` array are migrated into line
 nodes on load. Because nodes are controlled, custom node components write text
 edits back through `SketchLabActionsContext` rather than ReactFlow's internal store.

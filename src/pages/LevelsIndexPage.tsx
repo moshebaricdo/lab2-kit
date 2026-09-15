@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button, Dropdown, Tooltip } from "@moshebari/cads-react";
 import { Dialog } from "../components/ui/Dialog";
+import { FaIcon } from "../components/ui/icons/FaIcon";
 import { CadsLabProvider } from "../components/lab2/CadsLabProvider";
 import { useState, useCallback, type ReactNode } from "react";
 import {
@@ -11,6 +12,7 @@ import {
 import type { SavedVariant } from "../hooks/useSavedVariants";
 import { generatePromotedCode } from "../utils/promoteToCode";
 import type { PromotedCode } from "../utils/promoteToCode";
+import { EXPERIMENT_LINKS, type ExperimentLink } from "./experimentLinks";
 import {
   aiChatLabLevelLinks,
   pythonLabLevelLinks,
@@ -162,10 +164,13 @@ function LevelTypeCard({ entry }: { entry: LevelTypeEntry }) {
       </div>
       {entry.groups?.length ? (
         <div className={styles.cardGroups}>
-          {entry.groups.map((group) => (
+          {entry.groups.map((group, groupIndex) => (
             <div key={group.label} className={styles.cardGroup}>
               <p className={styles.cardGroupLabel}>{group.label}</p>
-              <IndexBubbleRow pages={group.pages} />
+              <IndexBubbleRow
+                pages={group.pages}
+                startIndex={groupIndex}
+              />
             </div>
           ))}
         </div>
@@ -176,12 +181,30 @@ function LevelTypeCard({ entry }: { entry: LevelTypeEntry }) {
   );
 }
 
+function ExperimentCard({ entry }: { entry: ExperimentLink }) {
+  return (
+    <div className={`${styles.card} ${styles.cardWithDescription}`}>
+      <p className={styles.experimentLab}>{entry.lab}</p>
+      <div className={styles.cardHeader}>
+        <h3 className={styles.cardTitle}>{entry.name}</h3>
+        <p className={styles.cardDescription}>{entry.description}</p>
+      </div>
+      <IndexBubbleRow
+        pages={entry.pages}
+        iconName={levelTypeTooltipIconName}
+      />
+    </div>
+  );
+}
+
 function IndexBubbleRow({
   pages,
   iconName,
+  startIndex = 0,
 }: {
   pages: LevelPage[];
   iconName?: (path: string) => string | undefined;
+  startIndex?: number;
 }) {
   return (
     <div className={styles.bubbleRow}>
@@ -197,7 +220,7 @@ function IndexBubbleRow({
             aria-label={`Open ${page.name}`}
             className={styles.bubble}
           >
-            {index + 1}
+            {startIndex + index + 1}
           </Link>
         </Tooltip>
       ))}
@@ -401,8 +424,7 @@ export function LevelsIndexPage() {
         <div className={styles.container}>
         <h1 className={styles.pageTitle}>Lab2 Prototype Kit</h1>
         <p className={styles.pageSubtitle}>
-          Canonical Chat, Web, Python, and Sketch labs in a shared Lab2 frame.
-          Iterate with an experiment route — do not edit a canonical page for a one-off.
+          This environment contains templates for each Lab environment.
         </p>
 
         <SavedVariantsSection />
@@ -430,19 +452,28 @@ export function LevelsIndexPage() {
             expanded={experimentsExpanded}
             onToggle={() => setExperimentsExpanded((current) => !current)}
           >
-            <div className={styles.entryGrid}>
-              <div className={`${styles.card} ${styles.cardWithDescription}`}>
-                <div className={styles.cardHeader}>
-                  <h3 className={styles.cardTitle}>Your experiments land here</h3>
-                  <p className={styles.cardDescription}>
-                    Copy a canonical lab page, register{" "}
-                    <code>/levels/&lt;lab&gt;-&lt;slug&gt;</code> in{" "}
-                    <code>App.tsx</code>, and list it in this section. Leave the
-                    Level Types routes as the stable product surface.
+            {EXPERIMENT_LINKS.length === 0 ? (
+              <div className={styles.emptyWrap}>
+                <div className={styles.emptyState}>
+                  <div className={styles.emptyStateIcon}>
+                    <FaIcon name="flask" size="l" />
+                  </div>
+                  <h2 className={styles.emptyStateTitle}>Your experiments land here</h2>
+                  <p className={styles.emptyStateText}>
+                    As you prototype new ideas, your experiments will appear here.
                   </p>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className={styles.entryGrid}>
+                {EXPERIMENT_LINKS.map((entry) => (
+                  <ExperimentCard
+                    key={entry.pages[0].path}
+                    entry={entry}
+                  />
+                ))}
+              </div>
+            )}
           </CollapsibleSectionCard>
 
         </div>

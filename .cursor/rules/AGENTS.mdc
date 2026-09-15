@@ -7,7 +7,7 @@ alwaysApply: true
 
 This is a **starter Lab2 frame** for Chat Lab, Web Lab 2, Python Lab, and Sketch Lab. It is not the kitchen-sink research garden.
 
-Canonical routes are the product surface. One-off explorations belong under **Experiments** as extra routes — do not add flags to a canonical page for a single demo.
+Canonical routes are the product surface. Exploring changes, demo levels, and new-lab prototypes belong under **Experiments** — extra routes plus a named card in `src/pages/experimentLinks.ts`. Do not add flags to a canonical page for a single demo.
 
 ---
 
@@ -33,8 +33,8 @@ Also load `.cursor/skills/cads-prototyping/SKILL.md` when building or restyling 
 | Python Lab | `src/guidelines/level-types/pythonlab.md` |
 | Sketch Lab | `src/guidelines/level-types/sketchlab.md` |
 | AI Chat Lab | `src/guidelines/level-types/aichatlab.md` |
-| New experiment on an existing lab | `.cursor/skills/add-experiment/SKILL.md` |
-| New lab type | `.cursor/skills/add-level-type/SKILL.md` |
+| Explore a lab, demo level, or prototype a new lab | `.cursor/skills/add-experiment/SKILL.md` |
+| Graduate a new lab to Level Types | `.cursor/skills/add-level-type/SKILL.md` |
 | Tutor / live AI | `src/guidelines/tutor-harness.md` |
 
 ---
@@ -48,7 +48,7 @@ Also load `.cursor/skills/cads-prototyping/SKILL.md` when building or restyling 
 | Add shared editor features | `src/components/ide/shared` |
 | Add Web / Python / Sketch / Chat chrome | `src/components/ide/<lab>/views` |
 | Add a **canonical** lab route | `src/pages/<lab>/` + Level Types on `/levels` |
-| Add an **experiment** | `src/pages/<lab>/` thin wrapper + Experiments on `/levels` |
+| Add an **experiment** | `src/pages/<lab>/` thin wrapper + card in `experimentLinks.ts` |
 | Add mock data | `src/data/<lab>/` |
 | Tune live Tutor | `src/lib/tutor/` + `tutor-harness.md` |
 

@@ -17,10 +17,6 @@ const LevelsIndexPage = lazyPage(
 );
 const AiChatLabPages = () => import("./pages/aichatlab/AiChatLabLevelPage");
 const AiChatLabLevelPage = lazyPage(AiChatLabPages, "AiChatLabLevelPage");
-const AiChatLabSetupLevelPage = lazyPage(
-  AiChatLabPages,
-  "AiChatLabSetupLevelPage",
-);
 const AiChatLabModelCardLevelPage = lazyPage(
   AiChatLabPages,
   "AiChatLabModelCardLevelPage",
@@ -43,10 +39,6 @@ const WebLab2GenericLevelPage = lazyPage(
   () => import("./pages/weblab2/WebLab2GenericLevelPage"),
   "WebLab2GenericLevelPage",
 );
-const WebLab2DemoProjectLevelPage = lazyPage(
-  () => import("./pages/weblab2/WebLab2DemoProjectLevelPage"),
-  "WebLab2DemoProjectLevelPage",
-);
 const WebLab2BlankDemoProjectLevelPage = lazyPage(
   () => import("./pages/weblab2/WebLab2BlankDemoProjectLevelPage"),
   "WebLab2BlankDemoProjectLevelPage",
@@ -65,7 +57,7 @@ export default function App() {
         <Route path="/levels/aichatlab" element={<AiChatLabLevelPage />} />
         <Route
           path="/levels/aichatlab-setup"
-          element={<AiChatLabSetupLevelPage />}
+          element={<Navigate to="/levels/aichatlab" replace />}
         />
         <Route
           path="/levels/aichatlab-model-card"
@@ -87,7 +79,7 @@ export default function App() {
         />
         <Route
           path="/levels/weblab2-demo-project"
-          element={<WebLab2DemoProjectLevelPage />}
+          element={<Navigate to="/levels/weblab2-demo-project-blank" replace />}
         />
         <Route
           path="/levels/weblab2-demo-project-blank"

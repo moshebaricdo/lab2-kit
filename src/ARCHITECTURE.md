@@ -186,7 +186,9 @@ src/
 │   ├── progression/
 │   ├── pythonlab/
 │   ├── sketchlab/
-│   └── weblab2/
+│   ├── weblab2/
+│   ├── levelTypeLinks.ts           # Canonical Level Types bubbles
+│   └── experimentLinks.ts          # Experiments cards on `/levels`
 ├── assets/
 │   └── empty-states/                # Empty-state illustrations used by shared IDE surfaces
 ├── utils/
@@ -315,6 +317,7 @@ Standalone CADS is **`@moshebari/cads-variables`** and **`@moshebari/cads-react`
 - Add Tutor provider/prompt/context/validation changes under `lib/tutor`.
 - Add reusable primitives under `components/ui`.
 - Add icon-only assets under `components/ui/icons`.
+- List experiments in `pages/experimentLinks.ts` (card on `/levels`). Canonical Level Types stay in `pages/levelTypeLinks.ts`.
 
 ## Verification Checklist
 

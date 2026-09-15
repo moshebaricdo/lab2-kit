@@ -39,8 +39,8 @@ The console header includes controls to run code, clear output, and toggle betwe
 
 ## Routes
 
-- `/levels/pythonlab` — Python Lab Level with a guided check-in planner project
-- `/levels/pythonlab-blank` — Standalone Project (Blank) with no starter files, instructions drawer hidden, and collapsible sidebar enabled
+- `/levels/pythonlab` — in-curriculum Python Lab Level with a guided check-in planner project
+- `/levels/pythonlab-blank` — standalone blank project with no starter files, instructions drawer hidden, and collapsible sidebar enabled
 - `/levels/progression-backpack-labs-python` — second level of the Backpack Across Labs sample (shared file-type seed; see `src/data/backpack/crossLabBackpackSeed.ts`)
 
 ## Component Structure

@@ -1,11 +1,13 @@
 ---
 name: add-lab-route
-description: Adds a new Lab2 route or demo page using the repository's route composition, shell, resource-panel, hook, data, and documentation conventions. Use when creating a new route, demo page, prototype variant, or level page.
+description: Composes a Lab2 route page using the repository's shell, resource-panel, hook, data, and documentation conventions. Use after deciding experiment vs canonical. Demo, prototype, exploration, and one-off routes use add-experiment. Extra canonical Level Types siblings are rare — confirm before adding to levelTypeLinks.ts.
 ---
 
 # Add Lab Route
 
-For a **one-off on an existing lab**, prefer `.cursor/skills/add-experiment/SKILL.md`.
+For a **demo, prototype, exploration, or one-off**, stop and follow `.cursor/skills/add-experiment/SKILL.md`.
+
+This skill is only for composing the page after that decision (or for a confirmed extra canonical sibling).
 
 ## Required Reading
 
@@ -22,6 +24,7 @@ For a **one-off on an existing lab**, prefer `.cursor/skills/add-experiment/SKIL
    - `src/pages/pythonlab`
    - `src/pages/sketchlab`
    - `src/pages/aichatlab`
+   - or `src/pages/<lab>/` for a new-lab experiment
 
 2. Find and read the closest existing route page. Match its composition style, prop naming, dev-panel defaults, session-storage conventions, and data imports.
 
@@ -37,7 +40,7 @@ For a **one-off on an existing lab**, prefer `.cursor/skills/add-experiment/SKIL
 
 6. Add or reuse fixtures from `src/data/<domain>/`.
 
-7. Register the route in `src/App.tsx`. Canonical labs go on Level Types; one-offs go under Experiments.
+7. Register the route in `src/App.tsx`. Experiments go in `src/pages/experimentLinks.ts`. Canonical labs go on Level Types via `levelTypeLinks.ts`.
 
 8. Style with CADS components and Foundations variables. Do not add `App*` or new `--ds-*` on Lab2 surfaces.
 

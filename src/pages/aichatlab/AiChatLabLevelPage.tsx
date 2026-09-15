@@ -208,43 +208,12 @@ export function AiChatLabLevelPage({
   );
 }
 
-export function AiChatLabSetupLevelPage() {
-  return (
-    <AiChatLabLevelPage
-      currentLevelPath="/levels/aichatlab-setup"
-      defaults={{
-        title: "Setup Only Level",
-        continueLabel: "Continue to Level 3",
-        showConfigPanel: true,
-        showModelControl: true,
-        showSystemPromptControl: false,
-        initialTemperature: 0.4,
-        instructionsMarkdown: [
-          "# Step 3: Tune the Model",
-          "Use the temperature slider to compare more predictable and more creative responses.",
-          "## Do This",
-          "1. Ask the AI for three project ideas.",
-          "2. Lower the temperature and send the same prompt again.",
-          "3. Raise the temperature and compare what changes.",
-        ].join("\n\n"),
-        initialMessages: [
-          {
-            role: "assistant",
-            content:
-              "Hello! Ask me for ideas, then adjust temperature to see how my style changes.",
-          },
-        ],
-      }}
-    />
-  );
-}
-
 export function AiChatLabModelCardLevelPage() {
   return (
     <AiChatLabLevelPage
       currentLevelPath="/levels/aichatlab-model-card"
       defaults={{
-        title: "Full Model Config Level",
+        title: "Configure Chatbot Level",
         continueLabel: "Finish",
         showConfigPanel: true,
         showRetrievalTab: true,

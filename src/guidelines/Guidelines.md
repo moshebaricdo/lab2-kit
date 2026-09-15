@@ -6,7 +6,7 @@ When making changes, optimize for:
 
 - reuse of the shared Lab2 frame
 - CADS as the UI source of truth
-- experiments as extra routes, not flags on canonical pages
+- experiments as extra routes plus a named card in `src/pages/experimentLinks.ts`, not flags on canonical pages
 
 ---
 
@@ -25,7 +25,7 @@ src/
     ide/pythonlab/views/   # Python Lab workspace + runtime
     ide/sketchlab/views/   # Sketch Lab canvas
     ide/aichatlab/views/   # AI Chat Lab workspace
-  pages/                   # Route composition, grouped by lab
+  pages/                   # Route composition, grouped by lab (`experimentLinks.ts` = Experiments catalog)
   data/                    # Demo project fixtures
   hooks/                   # App-level state
   lib/tutor/               # Functional Tutor harness
@@ -197,7 +197,7 @@ Do not reintroduce removed legacy paths or compatibility shims unless there is a
 - **Need Sketch Lab-specific workspace chrome?** -> `src/components/ide/sketchlab/views`
 - **Need AI Chat Lab-specific workspace chrome?** -> `src/components/ide/aichatlab/views`
 - **Need to tune Tutor?** -> `src/lib/tutor` and `src/guidelines/tutor-harness.md`
-- **Need an experiment?** -> extra route + Experiments on `/levels` (see `.cursor/skills/add-experiment/SKILL.md`)
+- **Need an experiment, demo level, or new-lab prototype?** -> extra route + named card in `src/pages/experimentLinks.ts` (see `.cursor/skills/add-experiment/SKILL.md`)
 
 ---
 

@@ -72,6 +72,53 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
+.emptyWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  padding: 24px;
+}
+
+.emptyState {
+  display: flex;
+  max-width: 340px;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-neutral-secondary);
+  text-align: center;
+}
+
+.emptyStateIcon {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--shape-round);
+  background: var(--background-neutral-septenary);
+  color: var(--text-neutral-primary-inverse);
+  margin-bottom: 10px;
+}
+
+.emptyStateTitle {
+  margin: 0 0 2px;
+  color: var(--text-neutral-primary);
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: var(--leading-body-md);
+}
+
+.emptyStateText {
+  max-width: 250px;
+  margin: 0;
+  color: var(--text-neutral-secondary);
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-xs);
+  line-height: var(--leading-body-xs);
+}
+
 /* ── Level-type card ── */
 
 .card {
@@ -103,13 +150,21 @@
   margin: 0;
 }
 
+.experimentLab {
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-neutral-tertiary);
+  margin: 0 0 8px;
+}
+
 .cardWithDescription .bubbleRow {
   margin-top: 16px;
 }
 
 .cardGroups {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-top: 16px;
 }
@@ -201,7 +256,7 @@
 
 .variantsToggleTitle {
   color: var(--text-neutral-primary);
-  font-size: var(--text-heading-sm);
+  font-size: var(--text-heading-xs);
   font-weight: var(--font-weight-semi-bold);
 }
 

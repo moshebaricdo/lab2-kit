@@ -25,6 +25,10 @@ interface SketchLabLevelPageProps {
   initialNodes?: SketchNode[];
   initialEdges?: SketchLegacyEdge[];
   instructionsMarkdown?: string;
+  showInstructionsTab?: boolean;
+  showInstructionsDrawer?: boolean;
+  enableSidebarCollapse?: boolean;
+  collapseSidebarByDefault?: boolean;
   levelLinks?: LevelProgressLink[];
   currentLevel?: number;
   totalLevels?: number;
@@ -36,10 +40,29 @@ interface SketchLabLevelPageProps {
 }
 
 const sketchLabDevFields: DevPanelField[] = [
-  { key: "showInstructionsTab", label: "Show instructions tab", type: "boolean", group: "Resource panel" },
+  {
+    key: "showInstructionsTab",
+    label: "Show instructions tab",
+    type: "boolean",
+    group: "Resource panel",
+  },
+  {
+    key: "showInstructionsDrawer",
+    label: "Show instructions drawer",
+    type: "boolean",
+    group: "Resource panel",
+  },
   { key: "showAiTutorTab", label: "Show AI tutor tab", type: "boolean", group: "Resource panel" },
   { key: "showContinueButton", label: "Show continue button", type: "boolean", group: "Resource panel" },
   { key: "continueLabel", label: "Continue label", type: "text", group: "Resource panel" },
+  { key: "enableSidebarCollapse", label: "Enable sidebar collapse", type: "boolean", group: "Resource panel" },
+  {
+    key: "collapseSidebarByDefault",
+    label: "Collapse sidebar by default",
+    type: "boolean",
+    group: "Resource panel",
+    visibleWhen: (values) => Boolean(values.enableSidebarCollapse),
+  },
   { key: "title", label: "Level title", type: "text", group: "Header" },
   { key: "subtitle", label: "Subtitle", type: "text", group: "Header" },
 ];
@@ -56,6 +79,10 @@ export function SketchLabLevelPage({
   initialNodes = sketchLabStarterNodes,
   initialEdges = sketchLabStarterEdges,
   instructionsMarkdown = sketchLabInstructionsMarkdown,
+  showInstructionsTab = true,
+  showInstructionsDrawer = true,
+  enableSidebarCollapse = false,
+  collapseSidebarByDefault = false,
   levelLinks,
   currentLevel,
   totalLevels,
@@ -88,10 +115,13 @@ export function SketchLabLevelPage({
   );
 
   const overrideResult = usePropsOverride({
-    showInstructionsTab: true,
+    showInstructionsTab,
+    showInstructionsDrawer,
     showAiTutorTab: true,
     showContinueButton: true,
     continueLabel: "Continue",
+    enableSidebarCollapse,
+    collapseSidebarByDefault,
     title,
     subtitle,
   });
@@ -130,13 +160,20 @@ export function SketchLabLevelPage({
         showSaveSuccessAlert: versionHistoryState.showSaveSuccessAlert,
         setShowSaveSuccessAlert: versionHistoryState.setShowSaveSuccessAlert,
         showInstructionsTab: Boolean(resolved.showInstructionsTab),
+        showInstructionsDrawer: Boolean(resolved.showInstructionsDrawer),
         showAiTutorTab: Boolean(resolved.showAiTutorTab),
         showHistoryTab: false,
         showContinueButton: Boolean(resolved.showContinueButton),
         continueLabel: continueLabel ?? String(resolved.continueLabel),
         onContinue,
+        collapsible: Boolean(resolved.enableSidebarCollapse),
+        defaultCollapsed:
+          Boolean(resolved.enableSidebarCollapse) &&
+          Boolean(resolved.collapseSidebarByDefault),
         surfaceVariant: "edge",
-        instructionsContent: <MarkdownInstructions markdown={instructionsMarkdown} />,
+        instructionsContent: resolved.showInstructionsTab ? (
+          <MarkdownInstructions markdown={instructionsMarkdown} />
+        ) : undefined,
         aiTutorComposerPlaceholder: "Ask for sketching help...",
         aiTutorEmptyStateTitle: "Ask the Sketch Tutor",
         aiTutorEmptyStateText:
@@ -154,7 +191,7 @@ export function SketchLabLevelPage({
       <SketchLabWorkspace
         initialNodes={initialNodes}
         initialEdges={initialEdges}
-        storageKey={`sketchlab:${currentLevelPath}:canvas`}
+        storageKey={`sketchlab:${currentLevelPath}:canvas:v2`}
         onRegisterBackpackImport={(handler) => {
           backpackImportRef.current = handler;
         }}
@@ -170,10 +207,10 @@ export function SketchLabBlankProjectLevelPage() {
       title="Sketch Lab: Blank Canvas"
       initialNodes={[]}
       initialEdges={[]}
-      instructionsMarkdown={[
-        "# Blank canvas",
-        "Start from an empty whiteboard. Add shapes, text, and images from the toolbar, then connect them with lines.",
-      ].join("\n\n")}
+      showInstructionsTab={false}
+      showInstructionsDrawer={false}
+      enableSidebarCollapse
+      collapseSidebarByDefault
     />
   );
 }

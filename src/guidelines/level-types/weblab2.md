@@ -8,9 +8,11 @@ Baseline coding-lab environment in this prototype. Serves as the richest existin
 
 ### Core templates (Level Types index)
 
-- `/levels/weblab2-level`
-- `/levels/weblab2-demo-project`
-- `/levels/weblab2-demo-project-blank`
+Each lab type ships one in-curriculum demo and one standalone demo, except AI Chat Lab, which has two in-curriculum surfaces (chat only and configure chatbot).
+
+- `/levels/weblab2-level` — in-curriculum (starter files + instructions)
+- `/levels/weblab2-demo-project-blank` — standalone blank project
+- `/levels/weblab2-demo-project` — redirects to the standalone blank template
 
 ### Experiments (Sample Progressions index)
 
@@ -55,7 +57,6 @@ See **`src/guidelines/level-types/weblab2-agents.md`** for the full capability d
 - `src/components/ide/weblab2/useWebLab2Preview.ts`
 - `src/components/ide/weblab2/webLab2FileTree.ts`
 - `src/components/ide/weblab2/webLab2Uploads.ts`
-- `src/pages/weblab2/WebLab2DemoProjectLevelPage.tsx`
 - `src/pages/weblab2/WebLab2BlankDemoProjectLevelPage.tsx`
 - `src/pages/weblab2/WebLab2TutorActionCardLevelPage.tsx`
 - `src/pages/weblab2/WebLab2UploadMechanismsLevelPage.tsx`

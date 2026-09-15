@@ -1,60 +1,8 @@
 import type { ChatMessage } from "../../types/chat";
 import type { SketchLegacyEdge, SketchNode } from "../../types/sketchLab";
 
-/**
- * Default Sketch Lab project — a minimal starter so the canvas opens with a
- * shape, a text label, and a standalone connecting line (rather than an empty grid).
- */
-export const sketchLabStarterNodes: SketchNode[] = [
-  {
-    id: "shape-1",
-    type: "shape",
-    position: { x: 220, y: 200 },
-    data: {
-      kind: "shape",
-      shape: "rectangle",
-      text: "Start here",
-      background: "pink",
-      border: "red",
-      fontSizeKey: "medium",
-      align: "center",
-      textColor: "black",
-      rotation: 0,
-    },
-  },
-  {
-    id: "text-1",
-    type: "text",
-    position: { x: 560, y: 150 },
-    data: {
-      kind: "text",
-      text: "Sketch your idea",
-      fontSizeKey: "large",
-      align: "left",
-      color: "black",
-      rotation: 0,
-    },
-  },
-  {
-    id: "line-1",
-    type: "line",
-    position: { x: 332, y: 188 },
-    width: 244,
-    height: 88,
-    data: {
-      kind: "line",
-      start: { x: 8, y: 72 },
-      end: { x: 236, y: 8 },
-      startAttachment: { nodeId: "shape-1", handleId: "right" },
-      endAttachment: { nodeId: "text-1", handleId: "left" },
-      color: "black",
-      thickness: "medium",
-      style: "solid",
-      shape: "straight",
-      arrowheads: "end",
-    },
-  },
-];
+/** Default Sketch Lab canvas starts empty. */
+export const sketchLabStarterNodes: SketchNode[] = [];
 
 /** @deprecated Legacy starter edges — migrated to standalone line nodes. */
 export const sketchLabStarterEdges: SketchLegacyEdge[] = [];

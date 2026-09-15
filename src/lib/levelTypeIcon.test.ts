@@ -11,7 +11,7 @@ describe("getLevelTypeIconConfig", () => {
       family: "brands",
       name: "python",
     });
-    expect(getLevelTypeIconConfig("/levels/aichatlab-setup")).toEqual({
+    expect(getLevelTypeIconConfig("/levels/aichatlab")).toEqual({
       family: "solid",
       name: "messages",
     });

@@ -1,9 +1,11 @@
 ---
 name: add-level-type
-description: Guides adding a new Lab2 level type with the correct route, component, data, hook, styling, and documentation patterns. Use when creating a new IDE lab beyond Chat, Web, Python, or Sketch.
+description: Graduates a new Lab2 level type onto Level Types with the correct route, component, data, hook, styling, and documentation patterns. Use only when the user explicitly wants a new canonical lab beyond Chat, Web, Python, or Sketch. First-pass prototypes, demos, and explorations use add-experiment.
 ---
 
 # Add Level Type
+
+Prototype a new lab with `.cursor/skills/add-experiment/SKILL.md` first. Use this skill only when the user asks to make it a canonical Level Type (or to graduate an experiment).
 
 ## Required Reading
 
@@ -20,7 +22,7 @@ description: Guides adding a new Lab2 level type with the correct route, compone
 
 2. Add `src/pages/<labname>/` and one canonical route in `App.tsx`.
 
-3. Add a Level Types card via `levelTypeLinks.ts` + `LevelsIndexPage.tsx`.
+3. Add a Level Types card via `levelTypeLinks.ts` + `LevelsIndexPage.tsx`. Remove the prototype from `EXPERIMENT_LINKS` if it started as an experiment.
 
 4. Add fixtures under `src/data/<labname>/` if needed.
 

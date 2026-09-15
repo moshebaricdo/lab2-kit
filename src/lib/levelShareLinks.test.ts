@@ -51,7 +51,9 @@ describe("mapLevelLinksWithShareMode", () => {
 describe("findLevelLinkIndex", () => {
   it("matches level links that include share search params", () => {
     const links = mapLevelLinksWithShareMode(webLab2LevelLinks, "locked");
-    expect(findLevelLinkIndex(links, "/levels/weblab2-demo-project")).toBe(1);
+    expect(findLevelLinkIndex(links, "/levels/weblab2-demo-project-blank")).toBe(
+      1,
+    );
   });
 });
 
