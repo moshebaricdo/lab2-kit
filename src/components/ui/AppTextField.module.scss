@@ -1,0 +1,226 @@
+.root {
+  /* Control heights match AppButton / AppDropdown: L48 M40 S32 XS24 */
+  --app-text-field-control-height: 40px;
+  --app-text-field-label-size: var(--text-body-sm);
+  --app-text-field-label-line-height: var(--leading-body-sm);
+  --app-text-field-control-size: var(--text-body-md);
+  --app-text-field-control-line-height: var(--leading-body-md);
+  --app-text-field-helper-size: var(--text-body-sm);
+  --app-text-field-helper-line-height: var(--leading-body-sm);
+  --app-text-field-icon-size: 16px;
+  --app-text-field-helper-gap: 6px;
+  --app-text-field-padding-inline: 16px;
+  --app-textarea-min-height: 84px;
+
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  color: var(--ds-text-neutral-primary);
+}
+
+.widthAuto {
+  width: 300px;
+}
+
+.bareRoot {
+  display: block;
+  width: 100%;
+}
+
+.sizeL {
+  --app-text-field-control-height: 48px;
+  --app-text-field-label-size: var(--text-body-md);
+  --app-text-field-label-line-height: var(--leading-body-md);
+  --app-text-field-control-size: var(--text-heading-xs);
+  --app-text-field-control-line-height: var(--leading-heading-xs);
+  --app-text-field-helper-size: var(--text-body-md);
+  --app-text-field-helper-line-height: var(--leading-body-md);
+  --app-text-field-icon-size: 18px;
+  --app-text-field-padding-inline: 16px;
+  --app-textarea-min-height: 104px;
+}
+
+.sizeS {
+  --app-text-field-control-height: 32px;
+  --app-text-field-label-size: var(--text-body-xs);
+  --app-text-field-label-line-height: var(--leading-body-xs-semibold);
+  --app-text-field-control-size: var(--text-body-sm);
+  --app-text-field-control-line-height: var(--leading-body-sm);
+  --app-text-field-helper-size: var(--text-body-xs);
+  --app-text-field-helper-line-height: var(--leading-body-xs);
+  --app-text-field-icon-size: 14px;
+  --app-text-field-helper-gap: 4px;
+  --app-text-field-padding-inline: 12px;
+  --app-textarea-min-height: 72px;
+}
+
+.sizeXs {
+  --app-text-field-control-height: 24px;
+  --app-text-field-label-size: var(--text-body-xs);
+  --app-text-field-label-line-height: var(--leading-body-xs-semibold);
+  --app-text-field-control-size: var(--text-body-xs);
+  --app-text-field-control-line-height: var(--leading-body-xs);
+  --app-text-field-helper-size: var(--text-body-xs);
+  --app-text-field-helper-line-height: var(--leading-body-xs);
+  --app-text-field-icon-size: 12px;
+  --app-text-field-helper-gap: 4px;
+  --app-text-field-padding-inline: 8px;
+  --app-textarea-min-height: 64px;
+}
+
+.label {
+  color: var(--ds-text-neutral-primary);
+  font-family: var(--font-body);
+  font-size: var(--app-text-field-label-size);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--app-text-field-label-line-height);
+}
+
+.control {
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--app-text-field-control-height);
+  border: 1px solid var(--ds-border-neutral-solid);
+  border-radius: var(--radius-sm);
+  background: var(--ds-background-neutral-primary);
+  color: var(--ds-text-neutral-primary);
+  font-family: var(--font-body);
+  font-size: var(--app-text-field-control-size);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--app-text-field-control-line-height);
+  padding: 0 var(--app-text-field-padding-inline);
+  transition:
+    background-color 0.08s ease-in,
+    border-color 0.08s ease-in,
+    box-shadow 0.08s ease-in,
+    color 0.08s ease-in;
+}
+
+.label + .control {
+  margin-top: 2px;
+}
+
+.input {
+  appearance: none;
+}
+
+.textarea {
+  height: auto;
+  min-height: var(--app-textarea-min-height);
+  padding-block: 8px;
+  resize: vertical;
+}
+
+.control::placeholder {
+  color: var(--ds-text-neutral-placeholder);
+  opacity: 1;
+}
+
+.control:focus {
+  outline: none;
+}
+
+.keyboardFocused .control {
+  outline: 2px solid var(--ds-border-selected-primary);
+  outline-offset: 2px;
+}
+
+.toneGray .control {
+  border-color: var(--ds-border-neutral-secondary);
+}
+
+.toneWhite {
+  color: var(--ds-text-neutral-white-fixed);
+}
+
+.toneWhite .label,
+.toneWhite .helper,
+.toneWhite .helperIcon {
+  color: var(--ds-text-neutral-white-fixed);
+}
+
+.toneWhite .control {
+  border-color: var(--ds-border-neutral-white-fixed);
+  background: var(--ds-background-neutral-primary-inverse);
+  color: var(--ds-text-neutral-white-fixed);
+}
+
+.toneWhite .control::placeholder {
+  color: var(--ds-text-disabled-neutral);
+}
+
+.invalid .control,
+.control[aria-invalid="true"] {
+  border-color: var(--ds-border-error-primary);
+}
+
+.invalid .helper,
+.invalid .helperIcon {
+  color: var(--ds-text-error-primary);
+}
+
+.disabled .label,
+.disabled .helper,
+.disabled .helperIcon {
+  color: var(--ds-text-disabled-neutral);
+}
+
+.disabled .control {
+  border-color: var(--ds-border-disabled-neutral);
+  color: var(--ds-text-disabled-neutral);
+  cursor: not-allowed;
+}
+
+.disabled .control::placeholder {
+  color: var(--ds-text-disabled-neutral);
+}
+
+.readOnly .control {
+  border-color: var(--ds-border-neutral-primary);
+  background: var(--ds-background-neutral-secondary);
+  color: var(--ds-text-neutral-primary);
+  cursor: default;
+}
+
+.helper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: var(--app-text-field-helper-gap);
+  color: var(--ds-text-neutral-primary);
+  font-family: var(--font-body);
+  font-size: var(--app-text-field-helper-size);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--app-text-field-helper-line-height);
+}
+
+.helperIcon {
+  display: inline-flex;
+  width: var(--app-text-field-icon-size);
+  flex-shrink: 0;
+  justify-content: center;
+  color: var(--ds-text-brand-primary);
+}
+
+.helperText {
+  min-width: 0;
+  flex: 1;
+}
+
+.bareControl {
+  height: auto;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.keyboardFocused .bareControl {
+  border-color: transparent;
+  outline: none;
+  box-shadow: none;
+}

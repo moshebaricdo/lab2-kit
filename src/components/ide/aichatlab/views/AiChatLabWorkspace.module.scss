@@ -1,0 +1,364 @@
+.root {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  gap: 8px;
+  padding: 8px;
+  background: var(--background-neutral-secondary);
+}
+
+.rootWithConfig {
+  grid-template-columns: minmax(280px, 360px) minmax(360px, 1fr);
+}
+
+.rootChatOnly {
+  grid-template-columns: minmax(420px, 1fr);
+}
+
+.rootShareMode {
+  grid-template-columns: minmax(280px, 2fr) minmax(420px, 3fr);
+}
+
+.configPanel,
+.modelCardPanel,
+.chatPanel {
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-primary);
+  box-shadow: 0 1px 2px 0 color-mix(
+    in srgb,
+    var(--text-neutral-black-fixed) 8%,
+    transparent
+  );
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.tabBar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: stretch;
+  overflow-x: auto;
+  // 6px on top/sides; no bottom so secondary Tabs baseline sits on the panel edge.
+  padding: 6px 6px 0;
+  background: var(--background-neutral-secondary);
+
+  // Tabs root uses `data-cads-tabs`, not `data-cads-component`.
+  :global([data-cads-tabs]) {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+// MUI Slider still transitions track left/width by default; CADS only strips
+// that from the thumb, so the fill trail lags the knob in this app. Docs
+// playground doesn't share Lab2's Emotion/CSS order, so kill it here.
+.root :global(.MuiSlider-track),
+.root :global(.MuiSlider-rail),
+.root :global(.MuiSlider-thumb) {
+  transition:
+    background-color var(--duration-short, 0.15s) var(--easing-standard, ease),
+    border-color var(--duration-short, 0.15s) var(--easing-standard, ease),
+    box-shadow var(--duration-short, 0.15s) var(--easing-standard, ease),
+    opacity var(--duration-short, 0.15s) var(--easing-standard, ease) !important;
+}
+
+.chatBody {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  overflow: auto;
+  padding: 12px;
+}
+
+.chatEmpty {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.chatMessageList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chatComposer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border-neutral-primary);
+  padding: 10px 12px 12px;
+  background: var(--background-neutral-primary);
+}
+
+.configBody {
+  flex: 1;
+  min-height: 0;
+}
+
+.configViewport {
+  height: 100%;
+}
+
+.configInner {
+  padding: 12px;
+}
+
+.fieldStack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fieldLabel {
+  color: var(--text-neutral-primary);
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.64;
+}
+
+.configFooter {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--border-neutral-primary);
+  padding: 8px 12px;
+}
+
+.footerButtonRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+}
+
+.configStatus {
+  margin: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+  line-height: 1.4;
+}
+
+.publishToast {
+  margin-bottom: 2px;
+}
+
+.addedSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--border-neutral-primary);
+  padding-top: 12px;
+}
+
+.addedHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.addedTitle {
+  margin: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.4;
+}
+
+.addedCount {
+  display: inline-flex;
+  min-width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--shape-round);
+  background: var(--background-neutral-tertiary);
+  color: var(--text-neutral-tertiary);
+  font-size: var(--text-body-xxs);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1;
+}
+
+.addedList,
+.modelCardPromptList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.addedCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-secondary);
+  padding: 8px 10px;
+}
+
+.addedCardText,
+.emptyAdded,
+.modelCardText {
+  margin: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-sm);
+  line-height: 1.5;
+}
+
+.modelCardBody {
+  flex: 1;
+  min-height: 0;
+}
+
+.modelCardInner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+
+.modelCardName {
+  margin: 4px 2px 4px;
+  color: var(--text-neutral-primary);
+  font-family: var(--font-family-main);
+  font-size: var(--text-heading-xs);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.4;
+}
+
+.modelCardSection {
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-primary);
+  overflow: hidden;
+}
+
+.modelCardSummary {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  border: 0;
+  background: var(--background-neutral-secondary);
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.4;
+  padding: 8px 8px 8px 12px;
+}
+
+.modelCardSummary:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--border-selected-primary);
+}
+
+.modelCardSectionExpanded .modelCardSummary {
+  border-bottom: 1px solid var(--border-neutral-primary);
+}
+
+.modelCardSummaryTitle {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.modelCardSummaryIcon {
+  flex: 0 0 auto;
+  width: 18px;
+  color: var(--text-neutral-quaternary);
+}
+
+.modelCardSectionBody {
+  padding: 10px;
+}
+
+.modelCardFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+}
+
+.modelCardField {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.modelCardField dt {
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.4;
+}
+
+.modelCardField dd {
+  margin: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-sm);
+  line-height: 1.5;
+}
+
+.emptyConfig {
+  display: flex;
+  min-height: 220px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 24px;
+  text-align: center;
+}
+
+.emptyIcon {
+  color: var(--text-neutral-quaternary);
+}
+
+.emptyTitle {
+  margin: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.4;
+}
+
+.emptyBody {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-sm);
+  line-height: 1.5;
+}
+
+@media (max-width: 960px) {
+  .rootWithConfig,
+  .rootShareMode {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

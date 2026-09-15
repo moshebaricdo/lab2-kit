@@ -1,0 +1,317 @@
+.collapsedRoot {
+  display: flex;
+  width: 32px;
+  max-width: 32px;
+  flex-direction: column;
+  overflow: clip;
+  background: var(--background-neutral-primary);
+  padding: 0 0 0 2px;
+}
+
+.collapsedRootTransparent {
+  background: transparent;
+}
+
+.collapsedHeader {
+  display: flex;
+  padding: 8px 0 4px 6px;
+}
+
+.collapsedToggle {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-primary);
+  transition: background-color 0.2s ease;
+}
+
+.collapsedToggle:hover {
+  background: var(--background-neutral-secondary);
+}
+
+.collapsedToggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--border-selected-primary);
+}
+
+.expandedRoot {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  background: var(--background-neutral-secondary);
+}
+
+.panelHeader {
+  min-height: 32px;
+  width: 100%;
+}
+
+.panelHeaderInner {
+  display: flex;
+  width: 100%;
+  min-height: inherit;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 8px 8px 12px;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.64;
+}
+
+.headerActions {
+  display: flex;
+  min-width: 50px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.iconBtn {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--shape-sm);
+  border: 0;
+  background: transparent;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.iconBtn:hover {
+  background: var(--background-neutral-quaternary);
+}
+
+.listContainer {
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.listContent {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 6px;
+}
+
+.planSection {
+  padding-top: 2px;
+}
+
+.sectionHeader {
+  display: flex;
+  min-height: 32px;
+  align-items: center;
+  padding: 8px 8px 8px 12px;
+}
+
+.emptyListText {
+  margin: 0;
+  padding: 4px 6px;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+  line-height: 1.64;
+}
+
+.uploadInput {
+  display: none;
+}
+
+.uploadError {
+  margin: 0;
+  padding: 0 12px 8px;
+  color: var(--text-error-primary);
+  font-size: var(--text-body-xs);
+  line-height: 1.4;
+}
+
+.borderOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-right: 1px solid var(--border-neutral-primary);
+}
+
+.treeItemWrap {
+  position: relative;
+  width: 100%;
+}
+
+.siblingConnector {
+  position: absolute;
+  z-index: 20;
+  width: 1px;
+  background: var(--border-neutral-primary);
+}
+
+.rowOuter {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 24px;
+}
+
+.rowButton {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  height: 24px;
+  align-items: center;
+  cursor: pointer;
+  padding-right: 8px;
+  border-radius: var(--shape-sm);
+  overflow: hidden;
+}
+
+.rowButtonNested {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+[data-draggable-file="true"] {
+  cursor: grab;
+}
+
+[data-draggable-tree-item="true"] {
+  cursor: grab;
+}
+
+[data-draggable-file="true"]:active,
+[data-draggable-tree-item="true"]:active {
+  cursor: grabbing;
+}
+
+.rowButton:hover {
+  background: var(--background-neutral-tertiary);
+}
+
+.rowButton:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--border-selected-primary);
+}
+
+.rowHovered {
+  background: var(--background-neutral-tertiary);
+}
+
+.rowDropTarget {
+  background: var(--background-brand-light);
+  box-shadow: inset 0 0 0 1px var(--border-selected-primary);
+}
+
+.rowMain {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+}
+
+.fileIconWrap {
+  display: flex;
+  width: 12px;
+  height: 14px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.fileIcon {
+  color: var(--text-neutral-tertiary);
+  font-size: var(--text-body-xs);
+  line-height: 1;
+}
+
+.planFileIconOutline {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid var(--text-neutral-tertiary);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.planFileIconBuilt {
+  color: var(--text-neutral-tertiary);
+}
+
+.fileName {
+  margin: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-xs);
+  line-height: 1.64;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  flex: 1;
+  min-width: 0;
+}
+
+.fileNameSelected {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+/* ─── AI-change state: colored dot indicators ──────────── */
+
+.changeDot {
+  width: 7.5px;
+  height: 7.5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--background-selected-strong);
+}
+
+.rowMenu {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+}
+
+.childrenWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.childrenWrapSingle .childrenConnector {
+  height: 100%;
+}
+
+.childrenConnector {
+  position: absolute;
+  top: 0;
+  z-index: 20;
+  width: 1px;
+  height: calc(100% - 12px);
+  background: var(--border-neutral-primary);
+}
+
+.panelIcon {
+  width: 16px;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-sm);
+}
+
+.collapsedIcon {
+  width: 16px;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-sm);
+}

@@ -1,0 +1,234 @@
+/* ── Layout ── */
+
+.root {
+  min-height: 0;
+  flex: 1;
+  padding: 8px;
+  padding-bottom: 0;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Nav card (multi-rubric pagination) ── */
+
+.navCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--background-neutral-secondary);
+  padding: 8px 10px;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+}
+
+.navLabel {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-neutral-secondary);
+  font-size: var(--text-body-xs);
+  line-height: var(--leading-body-xs);
+  text-align: center;
+}
+
+/* ── Header card ── */
+
+.headerCard {
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  overflow: hidden;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--background-neutral-secondary);
+  padding: 12px;
+  border-bottom: 1px solid var(--border-neutral-primary);
+}
+
+.rubricName {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: var(--leading-body-md);
+}
+
+.statusTag {
+  flex-shrink: 0;
+}
+
+/* ── Feedback section ── */
+
+.feedbackSection {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+}
+
+.feedbackLabelRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  display: none;
+}
+
+.feedbackLabel {
+  color: var(--text-neutral-tertiary);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.feedbackBody {
+  margin: 0;
+  color: var(--text-neutral-secondary);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+}
+
+/* ── Rubric table ── */
+
+.tableCard {
+  overflow: hidden;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-primary);
+}
+
+.tableHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  padding: 8px 12px;
+  background: var(--background-neutral-secondary);
+  border-bottom: 1px solid var(--border-neutral-primary);
+}
+
+.tableHeaderLabel {
+  margin: 0;
+  color: var(--text-neutral-tertiary);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── Category rows ── */
+
+.categoryRow {
+  border-bottom: 1px solid var(--border-neutral-primary);
+}
+
+.categoryRow:last-child {
+  border-bottom: 0;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: default;
+}
+
+.selectedMarker {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--shape-round);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.markerSelected {
+  background: var(--background-selected-primary);
+  border: 2px solid var(--border-selected-primary);
+  color: var(--text-selected-primary);
+  font-size: var(--text-body-xxs);
+}
+
+.markerUnselected {
+  border: 2px solid var(--border-neutral-primary);
+  background: var(--background-neutral-primary);
+}
+
+.categoryInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.categoryTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.categoryTitleRow .categoryLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+.categoryLabel {
+  margin: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: var(--leading-body-sm);
+}
+
+.categoryLabelSelected {
+  color: var(--text-selected-primary-inverse);
+}
+
+.categoryDescription {
+  margin: 2px 0 0;
+  color: var(--text-neutral-secondary);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+}
+
+/* ── Empty state ── */
+
+.emptyCard {
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-primary);
+  padding: 24px 14px;
+  text-align: center;
+}
+
+.emptyIcon {
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-heading-md);
+  margin-bottom: 8px;
+}
+
+.emptyTitle {
+  margin: 0 0 4px;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.emptyBody {
+  margin: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+}

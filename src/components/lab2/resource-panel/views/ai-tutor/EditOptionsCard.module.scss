@@ -1,0 +1,170 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-primary);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  height: 32px;
+  align-items: center;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border-neutral-primary);
+  background: var(--background-neutral-secondary);
+  color: var(--text-neutral-tertiary);
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+}
+
+.choiceList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.choiceRow,
+.customRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  width: 100%;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-primary);
+  padding: 6px 6px;
+  text-align: left;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.choiceRow {
+  color: var(--text-neutral-secondary);
+  cursor: pointer;
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+}
+
+.choiceRow:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.customRow {
+  margin: 0;
+}
+
+.optionBadge {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-secondary);
+  color: var(--text-neutral-secondary);
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.optionBadgeIcon {
+  color: currentColor;
+  font-size: var(--text-body-xxs);
+}
+
+.choiceLabel {
+  min-width: 0;
+}
+
+.choiceRow:hover:not(:disabled) {
+  border-color: var(--border-neutral-primary);
+  background: var(--background-neutral-secondary);
+}
+
+.choiceRow:hover:not(:disabled) .optionBadge {
+  background: var(--background-neutral-septenary);
+  color: var(--text-neutral-white-fixed);
+}
+
+.customRow:focus-within {
+  border-color: var(--border-neutral-primary);
+  background: var(--background-neutral-secondary);
+}
+
+.customRow:focus-within .optionBadge {
+  background: var(--background-neutral-septenary);
+  color: var(--text-neutral-white-fixed);
+}
+
+.customRow:hover:not(:has(.customInput:disabled)) {
+  border-color: var(--border-neutral-primary);
+  background: var(--background-neutral-secondary);
+}
+
+.customRow:hover:not(:has(.customInput:disabled)) .optionBadge {
+  background: var(--background-neutral-septenary);
+  color: var(--text-neutral-white-fixed);
+}
+
+.choiceRow:focus-visible {
+  outline: 2px solid var(--border-selected-primary);
+  outline-offset: 2px;
+}
+
+.customRow:focus-within {
+  outline: 2px solid var(--border-selected-primary);
+  outline-offset: 2px;
+}
+
+.choiceRow:disabled,
+.customRow:has(.customInput:disabled) {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.customInput {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-neutral-primary);
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+  padding: 0;
+}
+
+.customInput::placeholder {
+  color: var(--text-neutral-quaternary);
+}
+
+.customInput:focus {
+  outline: none;
+}
+
+.customInput:disabled {
+  cursor: not-allowed;
+}

@@ -1,0 +1,155 @@
+@use "../../../styles/_mixins.scss" as *;
+
+.root {
+  display: flex;
+  align-items: stretch;
+  height: 30px;
+  flex-shrink: 0;
+  color-scheme: light;
+  background: var(--background-neutral-secondary);
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-md);
+}
+
+.bubbleSlot {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0 8px;
+  border-right: 1px solid var(--border-neutral-primary);
+}
+
+.bubbleItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.tooltipWrap {
+  display: flex;
+  align-items: center;
+}
+
+.moreSlot {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  background: var(--background-neutral-primary);
+  border-radius: 0 var(--shape-md) var(--shape-md) 0;
+}
+
+.bubble {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  border-style: solid;
+  border-width: 1.5px;
+  border-radius: var(--shape-round);
+  box-sizing: border-box;
+  appearance: none;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+span.bubble {
+  cursor: default;
+}
+
+.bubbleInactive {
+  width: 12px;
+  height: 12px;
+}
+
+.bubbleActive {
+  width: 24px;
+  height: 24px;
+}
+
+.statusNotStarted {
+  background: var(--background-neutral-primary);
+  border-color: var(--border-neutral-secondary);
+  color: var(--text-neutral-primary);
+
+  &:hover,
+  &:active {
+    background: var(--background-brand-primary);
+    border-color: var(--background-brand-primary);
+    color: var(--text-neutral-white-fixed);
+  }
+}
+
+.statusInProgress {
+  background: var(--background-neutral-primary);
+  border-color: var(--border-success-strong);
+  color: var(--text-neutral-primary);
+
+  &:hover,
+  &:active {
+    background: var(--background-success-primary);
+    border-color: var(--background-success-primary);
+    color: var(--text-neutral-white-fixed);
+  }
+}
+
+.statusCompleted {
+  background: var(--background-success-primary);
+  border-color: var(--background-success-primary);
+  color: var(--text-neutral-white-fixed);
+
+  &:hover,
+  &:active {
+    background: var(--background-success-strong);
+    border-color: var(--background-success-strong);
+  }
+}
+
+.levelNumber {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-family-main, var(--font-body));
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  color: inherit;
+}
+
+.star {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  pointer-events: none;
+}
+
+.assessmentBadge {
+  position: absolute;
+  top: -3.5px;
+  left: 14px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 10px;
+  border: 1.25px solid var(--border-neutral-solid);
+  border-radius: var(--shape-round);
+  background: var(--background-neutral-primary);
+  color: var(--text-neutral-primary);
+  pointer-events: none;
+}

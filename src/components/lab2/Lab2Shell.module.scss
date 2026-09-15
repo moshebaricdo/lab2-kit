@@ -1,0 +1,35 @@
+.root {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.themeScope {
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--background-neutral-primary);
+  color: var(--text-neutral-primary);
+  color-scheme: light;
+}
+
+.themeScope:global(.dark) {
+  color-scheme: dark;
+}
+
+.themeScopeFloatingSurface {
+  background: var(--background-neutral-secondary);
+}
+
+.body {
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}

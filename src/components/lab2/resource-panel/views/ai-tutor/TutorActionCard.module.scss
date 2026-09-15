@@ -1,0 +1,45 @@
+.card {
+  margin-top: 0;
+}
+
+.prompt {
+  margin: 0 0 4px;
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-neutral-primary);
+  line-height: var(--leading-body-sm);
+}
+
+.fileList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fileIcon {
+  flex-shrink: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-sm);
+}
+
+.fileName {
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-neutral-primary);
+  line-height: var(--leading-body-sm);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

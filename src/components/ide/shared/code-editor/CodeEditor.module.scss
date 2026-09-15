@@ -1,0 +1,561 @@
+/* ================================================
+   Root & Layout
+   ================================================ */
+
+.root {
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  flex: 1;
+  flex-direction: column;
+  background: var(--background-neutral-primary);
+}
+
+.contentWrap {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.contentPad {
+  --editor-content-pad-top: 8px;
+
+  position: relative;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  padding-top: var(--editor-content-pad-top);
+  transition: padding-left 220ms ease, padding-right 220ms ease;
+}
+
+.contentPad::before,
+.contentPad::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 2;
+  height: 24px;
+  pointer-events: none;
+  content: "";
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.contentPad::before {
+  top: var(--editor-content-pad-top);
+  background: linear-gradient(
+    to bottom,
+    var(--background-neutral-primary),
+    transparent
+  );
+}
+
+.contentPad::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    var(--background-neutral-primary),
+    transparent
+  );
+}
+
+.contentPadTopFadeVisible::before,
+.contentPadBottomFadeVisible::after {
+  opacity: 1;
+}
+
+.contentPadCollapsed {
+  padding-left: 0px;
+  padding-right: 0;
+}
+
+.contentPadExpanded {
+  padding-left: 0;
+}
+
+.imagePreviewPane {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 24px;
+  background: var(--background-neutral-primary);
+}
+
+.imagePreview {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--shape-md);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 16%);
+}
+
+.imagePreviewUnavailable {
+  display: flex;
+  max-width: 360px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-md);
+  background: var(--background-neutral-primary);
+  text-align: center;
+}
+
+.imagePreviewTitle {
+  margin: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.35;
+}
+
+.imagePreviewText {
+  margin: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+  line-height: 1.5;
+}
+
+/* ================================================
+   Tab Bar
+   ================================================ */
+
+.tabsViewport {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.tabsViewport::before,
+.tabsViewport::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 20px;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.tabsViewport::before {
+  left: 0;
+  background: linear-gradient(
+    to left,
+    rgb(0 0 0 / 0%),
+    var(--background-neutral-primary)
+  );
+}
+
+.tabsViewport::after {
+  right: 0;
+  background: linear-gradient(
+    to right,
+    rgb(0 0 0 / 0%),
+    var(--background-neutral-primary)
+  );
+}
+
+.tabsViewportStartFadeVisible::before,
+.tabsViewportFadeVisible::after {
+  opacity: 1;
+}
+
+.tabsRow {
+  display: flex;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-top: 8px;
+  height: 40px;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+  transition: padding-left 220ms ease, padding-right 220ms ease;
+}
+
+.tabsRow::-webkit-scrollbar {
+  display: none;
+}
+
+.tabsRowCollapsed {
+  gap: 4px;
+  padding-left: 38px;
+  padding-right: 0;
+}
+
+.tabsRowExpanded {
+  gap: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.planActionBar {
+  display: flex;
+  flex-shrink: 0;
+  min-height: 40px;
+  align-items: center;
+  padding: 0px 8px 0px 12px;
+  transition: padding-left 220ms ease;
+}
+
+.planActionBarCollapsed {
+  padding-left:38px;
+}
+
+.tab {
+  display: flex;
+  flex: 0 0 auto;
+  cursor: pointer;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--shape-sm);
+  padding: 2px 8px;
+  transition: background-color 0.05s ease-in, opacity 0.05s ease-in;
+}
+
+.tab:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--border-selected-primary);
+}
+
+.tabActive {
+  background: var(--background-selected-primary);
+}
+
+.tabIdle {
+  background: var(--background-neutral-secondary);
+}
+
+.tabIdle:hover {
+  background: var(--background-neutral-tertiary);
+}
+
+.tabAiChanged {
+  background: var(--background-brand-light);
+}
+
+.tabAiChanged:hover {
+  background: var(--background-brand-light);
+}
+
+.tabAiChanged .tabIcon {
+  color: var(--text-brand-primary);
+}
+
+.tabAiChanged .tabName {
+  color: var(--text-neutral-primary);
+}
+
+.tabAiChangedActive {
+  background: var(--background-selected-strong);
+}
+
+.tabAiChangedActive .tabIcon,
+.tabAiChangedActive .tabName,
+.tabAiChangedActive .tabCloseIcon {
+  color: var(--text-selected-primary, var(--text-neutral-white-fixed));
+}
+
+.tabDragToTutor {
+  cursor: grab;
+}
+
+.tabDragToTutor:active {
+  cursor: grabbing;
+}
+
+.tabIconWrap {
+  display: flex;
+  width: 12px;
+  height: 14px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.tabIcon {
+  font-size: var(--text-body-xs);
+  line-height: 1;
+}
+
+.tabIconActive {
+  color: var(--text-selected-primary, var(--text-neutral-white-fixed));
+}
+
+.tabIconInactive {
+  color: var(--text-neutral-quaternary);
+}
+
+.tabName {
+  margin: 0;
+  font-size: var(--text-body-xs);
+  line-height: 1.64;
+  white-space: nowrap;
+}
+
+.tabNameActive {
+  color: var(--text-selected-primary, var(--text-neutral-white-fixed));
+}
+
+.tabNameInactive {
+  color: var(--text-neutral-tertiary);
+}
+
+.tabClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  transition: opacity 0.05s ease-in;
+  opacity: 0.7;
+}
+
+.tabClose:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.tabClose:focus-visible {
+  outline: none;
+  border-radius: var(--shape-sm);
+  box-shadow: 0 0 0 2px var(--border-selected-primary);
+  opacity: 1;
+}
+
+.tabCloseIcon {
+  width: 13px;
+  font-size: var(--text-body-xxs);
+  line-height: 1.25;
+  text-align: center;
+  transform: translateY(0.5px);
+}
+
+/* ================================================
+   Floating Action Bar (code selection → tutor)
+   ================================================ */
+
+.floatingActionBar {
+  position: absolute;
+  left: 0;
+  z-index: 99;
+  padding: 2px;
+  padding-top: 1px;
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-primary);
+  border: 1px solid var(--border-neutral-primary);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+}
+
+/* ================================================
+   Empty States
+   ================================================ */
+
+.emptySelection {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-neutral-quaternary);
+}
+
+/* ---------- Edge tabs (Cursor-style full row) ---------- */
+
+.tabsViewport.tabsViewportEdge {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  overflow: visible;
+  background: var(--background-neutral-secondary);
+}
+
+.tabsViewportEdge::before {
+  background: linear-gradient(
+    to left,
+    rgb(0 0 0 / 0%),
+    var(--background-neutral-secondary)
+  );
+}
+
+.tabsViewportEdge::after {
+  background: linear-gradient(
+    to right,
+    rgb(0 0 0 / 0%),
+    var(--background-neutral-secondary)
+  );
+}
+
+.tabsViewportEdgeWithFileManager::before {
+  left: 40px;
+}
+
+.tabsRow.tabsRowEdge {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  min-height: 40px;
+  gap: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  background: var(--background-neutral-secondary);
+  box-shadow: inset 0 -1px 0 var(--border-neutral-primary);
+}
+
+.tabsRowEdgeCollapsed,
+.tabsRowEdgeExpanded {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.tabEdgeFileManager {
+  display: inline-flex;
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-right: 1px solid var(--border-neutral-primary);
+  border-bottom: 1px solid var(--border-neutral-primary);
+  border-radius: 0;
+  background: var(--background-neutral-secondary);
+  color: var(--text-neutral-quaternary);
+  cursor: pointer;
+  transition: background-color 0.05s ease-in;
+}
+
+.tabEdgeFileManager:hover {
+  background: var(--background-neutral-tertiary);
+}
+
+.tabEdgeFileManager:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--border-selected-primary);
+}
+
+.tabEdgeFileManagerIcon {
+  font-size: var(--text-body-xs);
+  line-height: 1;
+}
+
+.tabEdge {
+  display: inline-flex;
+  box-sizing: border-box;
+  height: 40px;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  border-right: 1px solid var(--border-neutral-primary);
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  padding: 0 12px;
+  cursor: pointer;
+  font-family: var(--font-family-main);
+  transition: background-color 0.05s ease-in, color 0.05s ease-in,
+    border-color 0.05s ease-in;
+}
+
+.tabEdge:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--border-selected-primary);
+}
+
+.tabEdgeIdle {
+  border-bottom-color: var(--border-neutral-primary);
+  background: var(--background-neutral-secondary);
+}
+
+.tabEdgeIdle:hover {
+  background: var(--background-neutral-tertiary);
+}
+
+.tabEdgeActive {
+  border-bottom-color: var(--background-neutral-primary);
+  background: var(--background-neutral-primary);
+}
+
+.tabEdgeActive:hover {
+  background: var(--background-neutral-primary);
+}
+
+.tabEdgeAiChanged {
+  border-bottom-color: var(--border-neutral-primary);
+  background: var(--background-brand-light);
+}
+
+.tabEdgeAiChanged:hover {
+  background: var(--background-brand-light);
+}
+
+.tabEdgeAiChanged .tabIcon {
+  color: var(--text-brand-primary);
+}
+
+.tabEdgeAiChanged .tabName {
+  color: var(--text-neutral-primary);
+}
+
+.tabEdgeAiChangedActive {
+  border-bottom-color: var(--background-neutral-primary);
+  background: var(--background-selected-strong);
+}
+
+.tabEdgeAiChangedActive .tabIcon,
+.tabEdgeAiChangedActive .tabName,
+.tabEdgeAiChangedActive .tabCloseIcon {
+  color: var(--text-selected-primary, var(--text-neutral-white-fixed));
+}
+
+.tabEdgeIconActive {
+  color: var(--text-neutral-primary);
+}
+
+.tabEdgeIconInactive {
+  color: var(--text-neutral-quaternary);
+}
+
+.tabEdgeNameActive {
+  color: var(--text-neutral-primary);
+}
+
+.tabEdgeNameInactive {
+  color: var(--text-neutral-tertiary);
+}
+
+.tabEdge .tabName {
+  font-size: var(--text-body-xs);
+  line-height: 1.54;
+}
+
+.tabEdgeClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  opacity: 0.75;
+  transition: opacity 0.05s ease-in;
+}
+
+.tabEdgeClose:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.tabEdgeClose:focus-visible {
+  outline: none;
+  border-radius: var(--shape-sm);
+  box-shadow: 0 0 0 2px var(--border-selected-primary);
+  opacity: 1;
+}

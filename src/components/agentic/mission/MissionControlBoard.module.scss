@@ -1,0 +1,408 @@
+@use "../../../styles/_mixins.scss" as *;
+
+$good: var(--text-success-primary);
+$warn: var(--text-warning-secondary);
+
+.root {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: var(--background-neutral-quaternary);
+}
+
+.scroller {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 24px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Mission header */
+
+.missionHeader {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-lg);
+  background: var(--background-neutral-primary);
+}
+
+.missionIntro {
+  max-width: 640px;
+}
+
+.missionTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px;
+  font-size: var(--text-heading-xs);
+  color: var(--text-neutral-primary);
+}
+
+.missionBrief {
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+  color: var(--text-neutral-quaternary);
+
+  p {
+    margin: 0 0 8px;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  strong {
+    color: var(--text-neutral-primary);
+  }
+}
+
+.missionActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.missionHint {
+  max-width: 260px;
+  font-size: var(--text-body-xs);
+  text-align: right;
+  color: var(--text-neutral-quaternary);
+}
+
+/* Debrief */
+
+.debrief {
+  padding: 16px 20px;
+  border: 1px solid color-mix(in srgb, #{$good} 45%, transparent);
+  border-radius: var(--shape-lg);
+  background: color-mix(in srgb, #{$good} 8%, var(--background-neutral-primary));
+
+  p {
+    margin: 6px 0 0;
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-body-sm);
+    color: var(--text-neutral-primary);
+  }
+}
+
+.debriefTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-bold);
+  color: $good;
+}
+
+/* Task grid */
+
+.taskGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.taskCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-lg);
+  background: var(--background-neutral-primary);
+}
+
+.taskHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.taskTitle {
+  margin: 0;
+  font-size: var(--text-body-sm);
+  color: var(--text-neutral-primary);
+}
+
+.taskBrief {
+  margin: 0;
+  font-size: var(--text-body-xs);
+  line-height: var(--leading-body-xs);
+  color: var(--text-neutral-quaternary);
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border-radius: var(--shape-round);
+  font-size: var(--text-body-xxs);
+  font-weight: var(--font-weight-semi-bold);
+  white-space: nowrap;
+}
+
+.statusToneIdle {
+  background: var(--background-neutral-quaternary);
+  color: var(--text-neutral-quaternary);
+}
+
+.statusToneBusy {
+  background: color-mix(in srgb, var(--text-info-primary-fixed) 12%, transparent);
+  color: var(--text-info-primary-fixed);
+}
+
+.statusToneGood {
+  background: color-mix(in srgb, #{$good} 12%, transparent);
+  color: $good;
+}
+
+.statusToneWarn {
+  background: color-mix(in srgb, #{$warn} 14%, transparent);
+  color: $warn;
+}
+
+.spin {
+  animation: missionSpin 1s linear infinite;
+}
+
+@keyframes missionSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fields */
+
+.fieldLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: var(--text-body-xxs);
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--text-neutral-quaternary);
+}
+
+.specialistSelect {
+  flex-basis: 100%;
+  margin-top: 4px;
+  min-width: 0;
+}
+
+.specialistNote {
+  font-size: var(--text-body-xs);
+  color: var(--text-neutral-quaternary);
+}
+
+/* Briefcase */
+
+.briefcase {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px dashed var(--border-neutral-primary);
+  border-radius: var(--shape-lg);
+  background: color-mix(in srgb, var(--background-neutral-quaternary) 50%, var(--background-neutral-primary));
+}
+
+.briefcaseItems {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.briefcaseItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: var(--shape-md);
+  font-size: var(--text-body-xs);
+  color: var(--text-neutral-primary);
+  cursor: pointer;
+  transition: background 0.1s ease;
+
+  &:hover {
+    background: var(--background-neutral-quaternary);
+  }
+
+  input {
+    accent-color: var(--background-brand-primary);
+  }
+}
+
+.briefcaseItemPacked {
+  background: color-mix(in srgb, var(--background-brand-primary) 7%, transparent);
+}
+
+.briefcaseItemLocked {
+  cursor: default;
+  opacity: 0.75;
+
+  &:hover {
+    background: transparent;
+  }
+}
+
+.briefcaseItemLabel {
+  flex: 1;
+  font-family: var(--font-family-mono);
+  font-size: var(--text-body-xs);
+}
+
+.briefcaseItemTokens {
+  font-size: var(--text-body-xxs);
+  color: var(--text-neutral-quaternary);
+}
+
+.meterRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meterTrack {
+  position: relative;
+  flex: 1;
+  height: 8px;
+  border-radius: var(--shape-round);
+  background: var(--background-neutral-quaternary);
+  overflow: hidden;
+}
+
+.meterFill {
+  height: 100%;
+  border-radius: var(--shape-round);
+  transition: width 0.25s ease, background 0.25s ease;
+}
+
+.meterFillStarved {
+  background: var(--background-brand-mid);
+}
+
+.meterFillFocused {
+  background: $good;
+}
+
+.meterFillOverloaded {
+  background: $warn;
+}
+
+.meterBudgetMark {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  width: 2px;
+  background: var(--text-neutral-quaternary);
+  opacity: 0.55;
+}
+
+.meterLabel {
+  font-size: var(--text-body-xxs);
+  font-weight: var(--font-weight-semi-bold);
+  white-space: nowrap;
+}
+
+.meterLabelStarved {
+  color: var(--text-neutral-quaternary);
+}
+
+.meterLabelFocused {
+  color: $good;
+}
+
+.meterLabelOverloaded {
+  color: $warn;
+}
+
+/* Outcomes */
+
+.outcomeCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: var(--shape-lg);
+  border: 1px solid var(--border-neutral-primary);
+}
+
+.outcomeGood {
+  border-color: color-mix(in srgb, #{$good} 40%, transparent);
+  background: color-mix(in srgb, #{$good} 6%, transparent);
+}
+
+.outcomeWarn {
+  border-color: color-mix(in srgb, #{$warn} 45%, transparent);
+  background: color-mix(in srgb, #{$warn} 7%, transparent);
+}
+
+.outcomeHeadline {
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-neutral-primary);
+}
+
+.outcomeSummary {
+  margin: 0;
+  font-size: var(--text-body-xs);
+  line-height: var(--leading-body-xs);
+  color: var(--text-neutral-primary);
+
+  p {
+    margin: 0;
+  }
+}
+
+.outcomeBullets {
+  margin: 0;
+  padding-left: 18px;
+  font-size: var(--text-body-xs);
+  color: var(--text-neutral-quaternary);
+
+  li + li {
+    margin-top: 2px;
+  }
+}
+
+/* Actions */
+
+.taskActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+}
+
+.approvedNote {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  color: $good;
+}
+
+.boardFootnote {
+  font-size: var(--text-body-xxs);
+  color: var(--text-neutral-quaternary);
+  text-align: center;
+}

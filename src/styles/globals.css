@@ -1,0 +1,342 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* FA7 Pro Solid webfont (@font-face weight 900 in fonts-fa-pro.css) */
+  --font-fa-pro: "Font Awesome 7 Pro";
+  /* FA7 Brands webfont (@font-face weight 400 in fonts-fa-brands.css) */
+  --font-fa-brands: "Font Awesome 7 Brands";
+  --font-size: 16px;
+
+  /* Typography — CADS Figma typography collection + text styles.
+     Prefer AppText / _typography.scss mixins over composing these tokens by hand.
+     H1/H2 “Semi Bold” in Figma maps to Medium (500); elsewhere Semi Bold = 600. */
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Geist", sans-serif;
+  --font-mono: "Google Sans Code", "Courier New", monospace;
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+  /* Heading sizes (H1–H6). H1/H2 use --font-heading; H3–H6 use --font-body in Figma. */
+  --text-heading-xxl: 48px;
+  --text-heading-xl: 38px;
+  --text-heading-lg: 28px;
+  --text-heading-md: 24px;
+  --text-heading-sm: 22px;
+  --text-heading-xs: 20px;
+  --leading-heading-xxl: 52px;
+  --leading-heading-xl: 40px;
+  --leading-heading-lg: 36px;
+  --leading-heading-md: 32px;
+  --leading-heading-sm: 30px;
+  --leading-heading-xs: 28px;
+
+  /* Body sizes (Body 1–5 / Label / Link / Mono share this ramp) */
+  --text-body-lg: 18px;
+  --text-body-md: 16px;
+  --text-body-sm: 14px;
+  --text-body-xs: 12px;
+  --text-body-xxs: 10px;
+  --leading-body-lg: 28px;
+  --leading-body-md: 24px;
+  --leading-body-sm: 22px;
+  --leading-body-xs: 18px;
+  /* Kept as an alias of --leading-body-xs (was briefly 19px; unified to 18px). */
+  --leading-body-xs-semibold: var(--leading-body-xs);
+  --leading-body-xxs: 16px;
+
+  /* Letter-spacing — CADS text styles (percent → em) */
+  --tracking-heading-display: -0.01em; /* H1/H2 −1% */
+  --tracking-overline: 0.08em; /* Overline +8% */
+  --tracking-none: 0;
+
+  /* Legacy aliases — prefer --text-heading-* / --text-body-* in new code */
+  --text-h1: var(--text-heading-xxl);
+  --text-h2: var(--text-heading-xl);
+  --text-h3: var(--text-heading-lg);
+  --text-h4: var(--text-heading-md);
+  --text-lg: var(--text-heading-xs);
+  --text-icon: var(--text-body-lg);
+  --text-md: var(--text-body-lg);
+  --text-base: var(--text-body-md);
+  --text-sm: var(--text-body-sm);
+  --text-code: var(--text-body-sm);
+  --text-label: var(--text-body-xs);
+  --text-xs: var(--text-body-xxs);
+
+  /* Shape — CADS spacing-shape/shape */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-round: 999px;
+  --radius: var(--radius-sm);
+  --radius-default: var(--radius-sm);
+  --radius-card: var(--radius-md);
+
+  /* Spacing — CADS spacing-shape/spacing (forward-use; no retrofit) */
+  --space-xxs: 8px;
+  --space-xs: 16px;
+  --space-s: 24px;
+  --space-m: 32px;
+  --space-l: 40px;
+  --space-xl: 48px;
+  --space-xxl: 56px;
+  --space-xxxl: 64px;
+
+  /* Elevation — CADS Shadows/Small|Medium|Large (Focus Ring stays outline mixin) */
+  --shadow-sm: 0 4px 7px rgb(0 0 0 / 7%), 0 2px 2px rgb(0 0 0 / 7%);
+  --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
+  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);
+  --elevation-sm: var(--shadow-lg);
+
+  /* Tailwind / shadcn bridge aliases — components should use --ds-* directly */
+  --background: var(--ds-background-neutral-primary);
+  --foreground: var(--ds-text-neutral-primary);
+  --card: var(--ds-background-neutral-primary);
+  --card-foreground: var(--ds-text-neutral-primary);
+  --popover: var(--ds-background-neutral-primary);
+  --popover-foreground: var(--ds-text-neutral-primary);
+  --primary: var(--ds-background-brand-primary);
+  --primary-foreground: var(--ds-text-neutral-white-fixed);
+  --secondary: var(--ds-background-neutral-secondary);
+  --secondary-foreground: var(--ds-text-neutral-primary);
+  --muted: var(--ds-background-neutral-quaternary);
+  --muted-foreground: var(--ds-text-neutral-quaternary);
+  --accent: var(--ds-background-brand-primary);
+  --accent-foreground: var(--ds-text-neutral-white-fixed);
+  --destructive: var(--ds-background-error-primary);
+  --destructive-foreground: var(--ds-text-neutral-white-fixed);
+  --border: var(--ds-border-neutral-primary);
+  --input: var(--ds-background-neutral-primary);
+  --input-background: var(--ds-background-neutral-primary);
+  --ring: var(--ds-border-focused-primary);
+  --chart-1: var(--ds-background-brand-primary);
+  --chart-2: var(--ds-background-accent-pink-primary);
+  --chart-3: var(--ds-background-success-primary);
+  --chart-4: var(--ds-background-warning-primary);
+  --chart-5: var(--ds-background-error-primary);
+  --sidebar: var(--ds-background-neutral-primary);
+  --sidebar-foreground: var(--ds-text-neutral-primary);
+  --sidebar-primary: var(--ds-background-brand-primary);
+  --sidebar-primary-foreground: var(--ds-text-neutral-white-fixed);
+  --sidebar-accent: var(--ds-background-selected-primary);
+  --sidebar-accent-foreground: var(--ds-text-selected-primary);
+  --sidebar-border: var(--ds-border-neutral-primary);
+  --sidebar-ring: var(--ds-border-focused-primary);
+}
+
+.dark {
+  --elevation-sm: var(--shadow-lg);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: calc(var(--radius-lg) + 2px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+}
+
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-family: var(--font-heading);
+      font-size: var(--text-heading-xxl);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--leading-heading-xxl);
+      letter-spacing: var(--tracking-heading-display);
+    }
+
+    h2 {
+      font-family: var(--font-heading);
+      font-size: var(--text-heading-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--leading-heading-xl);
+      letter-spacing: var(--tracking-heading-display);
+    }
+
+    h3 {
+      font-family: var(--font-body);
+      font-size: var(--text-heading-lg);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--leading-heading-lg);
+      letter-spacing: var(--tracking-none);
+    }
+
+    h4 {
+      font-family: var(--font-body);
+      font-size: var(--text-heading-md);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--leading-heading-md);
+      letter-spacing: var(--tracking-none);
+    }
+
+    h5 {
+      font-family: var(--font-body);
+      font-size: var(--text-heading-sm);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--leading-heading-sm);
+      letter-spacing: var(--tracking-none);
+    }
+
+    h6 {
+      font-family: var(--font-body);
+      font-size: var(--text-heading-xs);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--leading-heading-xs);
+      letter-spacing: var(--tracking-none);
+    }
+
+    p {
+      font-family: var(--font-body);
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-normal);
+      line-height: var(--leading-body-md);
+      letter-spacing: var(--tracking-none);
+    }
+
+    label {
+      font-family: var(--font-body);
+      font-size: var(--text-body-sm);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--leading-body-sm);
+      letter-spacing: var(--tracking-none);
+    }
+
+    button {
+      font-family: var(--font-body);
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--leading-body-md);
+      letter-spacing: var(--tracking-none);
+    }
+
+    input {
+      font-family: var(--font-body);
+      font-size: var(--text-body-md);
+      font-weight: var(--font-weight-normal);
+      line-height: var(--leading-body-md);
+      letter-spacing: var(--tracking-none);
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Syntax highlighting — colors driven by --ds-syntax-* tokens */
+.syntax-comment {
+  color: var(--ds-syntax-comment);
+}
+
+.syntax-tag {
+  color: var(--ds-syntax-tag);
+}
+
+.syntax-attribute {
+  color: var(--ds-syntax-attribute);
+}
+
+.syntax-string {
+  color: var(--ds-syntax-string);
+}
+
+.syntax-keyword {
+  color: var(--ds-syntax-keyword);
+}
+
+.syntax-number {
+  color: var(--ds-syntax-number);
+}
+
+.syntax-punctuation {
+  color: var(--ds-syntax-punctuation);
+}
+
+.syntax-selector {
+  color: var(--ds-syntax-selector);
+}
+
+.syntax-property {
+  color: var(--ds-syntax-property);
+}
+
+.syntax-value {
+  color: var(--ds-syntax-value);
+}
+
+/* Fullscreen modal animation */
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleDown {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.2s ease-out;
+}
+
+.animate-scale-down {
+  animation: scaleDown 0.2s ease-in;
+}

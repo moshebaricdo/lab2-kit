@@ -1,0 +1,31 @@
+.root {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: end;
+  gap: 8px;
+}
+
+.rootSplit {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.field {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dropdownTrigger {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.dropdownTrigger :global([data-cads-dropdown-trigger="input"]) {
+  min-width: 0;
+  max-width: 100%;
+}

@@ -1,0 +1,231 @@
+.root {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ── Body (editor + console) ───────────────────────────── */
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.verticalShell {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.verticalEditorRegion {
+  display: flex;
+  flex: 1;
+  flex-basis: 0;
+  flex-direction: column;
+  min-width: 260px;
+  min-height: 0;
+}
+
+/* ── Editor pane — reuses shared CodeEditor + FileManager ─ */
+
+.editorPane {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-basis: 0;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.fileManagerRail {
+  flex-shrink: 0;
+}
+
+.fileManagerRailCollapsed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: auto;
+}
+
+.fileManagerContent {
+  width: 100%;
+  height: 100%;
+}
+
+.fileManagerContentEntering {
+  animation: file-manager-drawer-in 220ms ease both;
+}
+
+.fileManagerCollapseOverlay {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 3;
+  overflow: clip;
+  pointer-events: none;
+  background: var(--background-neutral-secondary);
+  animation: file-manager-drawer-out 220ms ease both;
+}
+
+.editorArea {
+  flex: 1;
+  min-width: 0;
+}
+
+.editorAreaCollapsing {
+  animation: editor-area-collapse 220ms ease both;
+}
+
+.editorAreaExpanding {
+  animation: editor-area-expand 220ms ease both;
+}
+
+/* ── Console pane ──────────────────────────────────────── */
+
+.consoleRegion {
+  display: flex;
+  flex: 1;
+  flex-basis: 0;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 60px;
+}
+
+.verticalShell .consoleRegion {
+  flex: 0 0 36%;
+  min-width: 220px;
+  min-height: 0;
+}
+
+.body .editorPane ~ .consoleRegion {
+  flex: 0 0 40%;
+  min-height: 96px;
+}
+
+.consoleHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.consolePane {
+  flex: 1;
+  min-height: 0;
+  background: var(--background-neutral-primary);
+}
+
+.consoleContent {
+  padding: 8px 12px;
+}
+
+.consoleLine {
+  margin: 0;
+  min-height: 1.6em;
+  font-family: var(--font-family-mono);
+  font-size: var(--text-body-xs);
+  line-height: 1.6;
+  color: var(--text-neutral-primary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.consoleLineError {
+  color: var(--text-error-primary);
+}
+
+.consoleLineMeta {
+  color: var(--text-neutral-quaternary);
+}
+
+.consoleLineInput {
+  color: var(--text-brand-primary);
+}
+
+.consoleInputRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  min-height: 1.6em;
+  font-family: var(--font-family-mono);
+  font-size: var(--text-body-xs);
+  line-height: 1.6;
+}
+
+.consolePrompt {
+  flex: 0 0 auto;
+  color: var(--text-neutral-quaternary);
+}
+
+.consoleInput {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text-neutral-primary);
+  font: inherit;
+  padding: 0;
+}
+
+.consoleInput::selection {
+  background: var(--background-brand-light);
+}
+
+.running :global([data-fa-name="spinner"]) {
+  animation: python-run-spin 0.8s linear infinite;
+}
+
+@keyframes file-manager-drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes python-run-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes file-manager-drawer-out {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes editor-area-collapse {
+  from {
+    transform: translateX(var(--file-manager-width));
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes editor-area-expand {
+  from {
+    transform: translateX(calc(var(--file-manager-width) * -1));
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}

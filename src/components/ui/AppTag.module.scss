@@ -1,0 +1,212 @@
+@use "../../styles/_typography.scss" as *;
+
+.tag {
+  --tag-bg: var(--ds-background-neutral-secondary);
+  --tag-text: var(--ds-text-neutral-primary);
+  --tag-icon: var(--ds-text-neutral-quaternary);
+
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-round);
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  white-space: nowrap;
+}
+
+.label {
+  min-width: 0;
+}
+
+/* Text-only tags use symmetric padding; icon sides tighten and label gains room. */
+.hasLeadIcon .label,
+.hasTrailIcon .label {
+  padding-inline: 2px;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.leadIcon,
+.trailIcon {
+  color: var(--tag-icon);
+}
+
+.fillSolid .leadIcon,
+.fillSolid .trailIcon,
+.fillSolid .dismissIcon {
+  color: inherit;
+}
+
+/* Sizes — default padding is text-only; icon modifiers tighten the icon edge. */
+.sizeS {
+  @include type-overline-3;
+
+  line-height: 1;
+  gap: 4px;
+  height: 20px;
+  padding-block: 2px;
+  padding-inline: 10px;
+}
+
+.sizeS.hasLeadIcon {
+  padding-inline-start: 6px;
+}
+
+.sizeS.hasTrailIcon {
+  padding-inline-end: 6px;
+}
+
+.sizeM {
+  @include type-overline-2;
+
+  line-height: 1;
+  gap: 4px;
+  height: 22px;
+  padding-block: 2px;
+  padding-inline: 12px;
+}
+
+.sizeM.hasLeadIcon {
+  padding-inline-start: 8px;
+}
+
+.sizeM.hasTrailIcon {
+  padding-inline-end: 8px;
+}
+
+.sizeL {
+  @include type-overline-1;
+
+  line-height: 1;
+  gap: 6px;
+  height: 24px;
+  padding-block: 4px;
+  padding-inline: 12px;
+}
+
+.sizeL.hasLeadIcon {
+  padding-inline-start: 8px;
+}
+
+.sizeL.hasTrailIcon {
+  padding-inline-end: 8px;
+}
+
+/* Light fill — semantic backgrounds, neutral text, colored icons */
+.fillLight.colorGray {
+  --tag-bg: var(--ds-background-neutral-tertiary);
+  --tag-icon: var(--ds-text-neutral-primary);
+}
+
+.fillLight.colorPurple {
+  --tag-bg: var(--ds-background-brand-light);
+  --tag-icon: var(--ds-text-brand-primary);
+}
+
+.fillLight.colorTeal {
+  --tag-bg: var(--ds-background-brand-light);
+  --tag-icon: var(--ds-text-brand-primary);
+}
+
+.fillLight.colorAqua {
+  --tag-bg: var(--ds-background-brand-light);
+  --tag-icon: var(--ds-text-brand-primary);
+}
+
+.fillLight.colorError {
+  --tag-bg: var(--ds-background-error-light);
+  --tag-icon: var(--ds-text-error-primary);
+}
+
+.fillLight.colorSuccess {
+  --tag-bg: var(--ds-background-success-light);
+  --tag-icon: var(--ds-text-success-primary);
+}
+
+.fillLight.colorWarning {
+  --tag-bg: var(--ds-background-warning-light);
+  --tag-text: var(--ds-text-neutral-black-fixed);
+  --tag-icon: var(--ds-text-warning-primary);
+}
+
+.fillLight.colorInfo {
+  --tag-bg: var(--ds-background-info-light);
+  --tag-icon: var(--ds-text-info-primary);
+}
+
+/* Solid fill — primary backgrounds, inverse text (warning uses fixed black) */
+.fillSolid.colorGray {
+  --tag-bg: var(--ds-background-neutral-septenary);
+  --tag-text: var(--ds-text-neutral-white-fixed);
+}
+
+.fillSolid.colorPurple {
+  --tag-bg: var(--ds-background-selected-primary);
+  --tag-text: var(--ds-text-neutral-white-fixed);
+}
+
+.fillSolid.colorTeal {
+  --tag-bg: var(--ds-background-selected-primary);
+  --tag-text: var(--ds-text-neutral-white-fixed);
+}
+
+.fillSolid.colorAqua {
+  --tag-bg: var(--ds-background-selected-primary);
+  --tag-text: var(--ds-text-neutral-white-fixed);
+}
+
+.fillSolid.colorError {
+  --tag-bg: var(--ds-background-error-primary);
+  --tag-text: var(--ds-text-neutral-white-fixed);
+}
+
+.fillSolid.colorSuccess {
+  --tag-bg: var(--ds-background-success-primary);
+  --tag-text: var(--ds-text-neutral-white-fixed);
+}
+
+.fillSolid.colorWarning {
+  --tag-bg: var(--ds-background-warning-primary);
+  --tag-text: var(--ds-text-neutral-black-fixed);
+}
+
+.fillSolid.colorInfo {
+  --tag-bg: var(--ds-background-info-primary);
+  --tag-text: var(--ds-text-neutral-white-fixed);
+}
+
+/* Disabled — uniform across fill types and colors */
+.disabled {
+  --tag-bg: var(--ds-background-disabled-neutral);
+  --tag-text: var(--ds-text-disabled-neutral);
+  --tag-icon: var(--ds-text-disabled-neutral);
+
+  cursor: not-allowed;
+}
+
+.dismissButton {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.dismissButton:focus-visible {
+  outline: 2px solid var(--ds-border-selected-primary);
+  outline-offset: 1px;
+}
+
+.dismissButton:disabled {
+  cursor: not-allowed;
+}

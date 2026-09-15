@@ -1,0 +1,323 @@
+# Lab2 Prototype Architecture
+
+This kit ships Chat Lab, Web Lab 2, Python Lab, and Sketch Lab. Assessment, AI Lab, and experiment progressions are not in this tree. New UI uses CADS via `CadsLabProvider`.
+
+## Overview
+
+The app is organized around a thin `App.tsx` router. Route pages compose the Lab2 shell, resource panel, and level-specific workspace while delegating reusable behavior to focused hooks and feature components.
+
+## Current High-Level Structure
+
+```text
+src/
+├── App.tsx
+├── data/
+│   ├── backpack/
+│   │   └── crossLabBackpackSeed.ts
+│   ├── weblab2/
+│   │   ├── index.ts
+│   │   └── projects/
+│   └── pythonlab/
+│       ├── index.ts
+│       └── projects/
+├── hooks/
+│   ├── useChatState.ts
+│   ├── useFileWorkspaceState.ts
+│   ├── useLayoutState.ts
+│   ├── useVersionHistoryState.ts
+│   ├── useBackpackState.ts
+│   └── BackpackContext.tsx
+├── lib/
+│   ├── backpack/                   # Cross-lab file backpack persistence + import helpers
+│   │   ├── backpackStorage.ts
+│   │   ├── backpackItemFromFile.ts
+│   │   ├── backpackImportAllowlist.ts
+│   │   ├── backpackFilters.ts
+│   │   └── importBackpackItemToTree.ts
+│   └── tutor/                      # Functional Tutor harness (see tutor-harness.md)
+│       ├── tutorClient.ts          # Root orchestration entry points
+│       ├── types.ts
+│       ├── intent/                 # Request classification
+│       ├── routing/                # Turn resolution & UI actions
+│       ├── runners/                # Guidance, planning, edit, tool-loop
+│       ├── context/                # Conversation & project packing
+│       ├── instruction/            # Tutor-primary curriculum delivery
+│       ├── edit/                   # Proposal application & validation
+│       ├── provider/               # OpenAI transport & prompts
+│       ├── conversation/           # Transcript signals & debug logging
+│       └── agents/                 # Specialist adapter + orchestrator dispatch
+│           ├── specialistRun.ts
+│           └── orchestration.ts
+├── components/
+│   ├── ui/                         # Universal primitives
+│   │   ├── AppButton.tsx
+│   │   ├── AppTextField.tsx
+│   │   ├── AppSlider.tsx
+│   │   ├── AppCheckbox.tsx
+│   │   ├── AppRadio.tsx
+│   │   ├── AppDropdown.tsx
+│   │   ├── SegmentedControl.tsx
+│   │   ├── Tooltip.tsx
+│   │   ├── AlertBanner.tsx
+│   │   ├── Dialog.tsx
+│   │   ├── PanelHeader.tsx
+│   │   ├── ResizableHandle.tsx
+│   │   ├── header/
+│   │   │   ├── TopNavigation.tsx
+│   │   │   └── LevelProgressBubbles.tsx
+│   │   └── icons/
+│   │       ├── FaIcon.tsx
+│   │       ├── AiTutorIcon.tsx
+│   │       └── Logo.tsx
+│   ├── lab2/                       # Lab2 frame — shared by ALL level types
+│   │   ├── Lab2Shell.tsx
+│   │   ├── CadsLabProvider.tsx     # CADS theme + variables for Lab2 frame
+│   │   ├── resource-panel/
+│   │   │   ├── Sidebar.tsx
+│   │   │   ├── ContinueButton.tsx
+│   │   │   ├── InstructionsDrawer.tsx
+│   │   │   └── views/
+│   │   │       ├── InstructionsPanel.tsx
+│   │   │       ├── ValidationPanel.tsx
+│   │   │       ├── ai-tutor/
+│   │   │       │   ├── AiTutorPanel.tsx
+│   │   │       │   ├── AiTutorComposer.tsx
+│   │   │       │   └── AiTutorMessageList.tsx
+│   │   │       ├── VersionHistory.tsx
+│   │   │       ├── BackpackPanel.tsx
+│   │   │       ├── TeacherResourcesPanel.tsx
+│   │   │       ├── ResourcesPanel.tsx
+│   │   │       └── SettingsPanel.tsx
+│   │   └── dev/
+│   │       ├── AnnotationOverlay.tsx
+│   │       ├── DevPanel.tsx
+│   │       └── DevPanelFields.tsx
+│   ├── ide/                        # IDE lab environments
+│   │   ├── shared/                 # Shared between IDE labs
+│   │   │   ├── CodeEditor.tsx
+│   │   │   ├── FileManager.tsx
+│   │   │   ├── CreateFileModal.tsx
+│   │   │   ├── VersionBanner.tsx
+│   │   │   ├── EmptyState.tsx
+│   │   │   └── FileManagerDropdown.tsx
+│   │   ├── weblab2/views/
+│   │   │   ├── Workspace.tsx
+│   │   │   ├── WorkspaceHeader.tsx
+│   │   │   ├── NewProjectEmptyState.tsx
+│   │   │   ├── PreviewPanel.tsx
+│   │   │   ├── CreateFileModal.tsx
+│   │   │   ├── VersionBanner.tsx
+│   │   │   └── ...
+│   │   ├── pythonlab/
+│   │   │   ├── runtime/
+│   │   │   │   └── pythonRunner.ts
+│   │   │   └── views/
+│   │   │       └── PythonWorkspace.tsx
+│   │   ├── sketchlab/
+│   │   │   ├── sketchLabIcons.tsx
+│   │   │   ├── sketchLabOptions.ts
+│   │   │   └── views/
+│   │   │       ├── SketchLabWorkspace.tsx
+│   │   │       ├── NodePalette.tsx
+│   │   │       ├── nodes/SketchNodes.tsx
+│   │   │       ├── sketchLabLineGeometry.ts
+│   │   │       └── panel/PropertyPanel.tsx
+│   │   ├── aichatlab/views/
+│   │   │   ├── AiChatLabWorkspace.tsx
+│   │   │   ├── AiChatLabConfigPanel.tsx
+│   │   │   ├── AiChatLabModelCardPanel.tsx
+│   │   │   ├── AiChatLabChatPanel.tsx
+│   │   │   └── aiChatLabModel.ts
+│   │   └── ailab/views/
+│   │       ├── AiLabGuidedWorkspace.tsx
+│   │       ├── DataStudio.tsx
+│   │       ├── DataSpreadsheet.tsx
+│   │       ├── TestDashboard.tsx
+│   │       ├── ModelActions.tsx
+│   │       ├── ModelInspector.tsx
+│   │       ├── SetupModal.tsx
+│   │       ├── AiLabWorkspace.tsx
+│   │       ├── DatasetViews.tsx
+│   │       ├── TrainPanel.tsx
+│   │       ├── TestPanel.tsx
+│   │       └── viz/                # Testing visualizations
+│   │           ├── VizFrame.tsx        # Optional toolbar / body / footer shell
+│   │           ├── TraceBar.tsx        # Play / prev / step dots / next + live region; row, column, or toolbar
+│   │           ├── NavigatorCard.tsx   # Floating Play + stepper card (KNN + tree; dock layout)
+│   │           ├── CanvasCards.tsx     # Canvas layout: toolbar card + input-over-prediction column; CARD_INSET
+│   │           ├── LabelMarks.tsx      # LabelSwatch, DistributionBar, LabelLegend
+│   │           ├── labelPalette.ts     # Shared label → token color order (+ neutral OTHER index)
+│   │           ├── labelGroups.ts      # Fold wide label sets into top-6 wedges + Other
+│   │           ├── treeLayout.ts       # Leaf-stack layout, horizontal or vertical (card/pill sizes), treeRules, elbow paths
+│   │           ├── DecisionTreeViz.tsx # ARIA tree over SVG links + Rules table view
+│   │           └── KnnViz.tsx          # Distance target (zoom/pan) / table + floating neighbor card
+│   └── agentic/                    # Optional Web Lab 2 specialist agents
+│       ├── crew/                   # Roster strip, modal, useAgentLevelState
+│       └── mission/                # Mission Control concept widget
+│   └── assessment/                 # Assessment level types
+│       ├── builder/                # In-lab quiz authoring + preview
+│       ├── cfu/                   # Final student check-for-understanding
+│       ├── quiz/                   # Final student quiz taking
+│       ├── shared/
+│       ├── bubble-choice/
+│       ├── drag-drop/
+│       ├── fill-in-blank/
+│       ├── free-response/
+│       ├── levelgroup/
+│       ├── match/
+│       └── multi/
+├── lib/
+│   └── assessmentBuilder/          # Canonical schema adapters, bank/draft storage, scoring
+├── pages/                          # Route-level entry points grouped by level type
+│   ├── aichatlab/
+│   ├── bubble-choice/
+│   ├── design-system/              # Standalone DS tooling routes (not level index entries)
+│   │   ├── tokens/                 # CodeAI color system JSON + Figma snapshot for the color sandbox
+│   │   ├── ColorSandboxPage.tsx
+│   │   ├── TypographySandboxPage.tsx
+│   │   └── CadsParityPage.tsx      # Packaged @moshebari/cads-* catalog
+│   ├── free-response/
+│   ├── levelgroup/
+│   ├── assessment-builder/
+│   ├── cfu/
+│   ├── quiz/
+│   ├── match/
+│   ├── multi-choice/
+│   ├── progression/
+│   ├── pythonlab/
+│   ├── sketchlab/
+│   └── weblab2/
+├── assets/
+│   └── empty-states/                # Empty-state illustrations used by shared IDE surfaces
+├── utils/
+│   └── fileTree.ts                  # Shared file-tree lookup/mapping helpers
+└── types/
+```
+
+## Composition Flow
+
+`App.tsx` composes route-level pages. Each page generally composes:
+
+1. `TopNavigation` from `components/ui/header` (CADS Global Header **labLevel** chrome: extraSmall outlined/text controls, lesson title + bubble progress indicator)
+2. `Lab2Shell` from `components/lab2`
+3. `Sidebar` from `components/lab2/resource-panel`
+4. A level-specific workspace, such as `components/ide/weblab2/views/Workspace`, `components/ide/pythonlab/views/PythonWorkspace`, `components/ide/sketchlab/views/SketchLabWorkspace`, `components/ide/aichatlab/views/AiChatLabWorkspace`, `components/ide/ailab/views/AiLabWorkspace`, or an assessment workspace under `components/assessment/<type>/views`
+
+Assessment builder pages compose `AssessmentBuilderWorkspace`, which adds resource-panel **Builder** tabs (`builder-bank`, `builder-settings` via `showBuilderTab`) and previews via `QuizAttemptWorkspace`. The build outline and inline question editor live in the center canvas (`AssessmentOutlineCanvas` on the final builder, legacy `AssessmentBuildCanvas` elsewhere).
+
+This keeps feature rendering close to feature folders while the hooks layer keeps cross-cutting state logic isolated.
+
+## Assessment Builder
+
+Assessment builder is a Lab2 level type with its own workspace chrome under `components/assessment/builder/views/`:
+
+- **`AssessmentBuilderWorkspace`** — `Lab2Shell` composition, Build/Preview toggle, quiz status tag, leave-page dialog, save prompts
+- **`AssessmentOutlineCanvas`** (final builder) — outline, intro card, sections, question tabs, add-question / add-section ghosts
+- **`QuizConfigPanel`** — purpose chooser/dropdown and student settings
+- **`QuizAttemptWorkspace`** — student quiz (also used as Preview) and teacher viewpoints
+- **`QuizPreviewEmptyState`** — Preview tab when the quiz has no questions and intro is off
+- **`CfuQuestionWorkspace`** — student CFU and teacher viewpoints. Single-question incorrect footer layout, last-page labels, and attempt-chip copy live in `lib/assessmentBuilder/studentFooter.ts` and `StudentQuestionCardFooter`. `QuizAttemptChip` is the sitting-count pill. Matching Try again keeps correct pairs via `lib/assessmentBuilder/matchRetry.ts`.
+- **`AssessmentBuildCanvas`** (legacy routes) — older outline
+- **`AssessmentBuilderPanel`** — bank + configuration. Bank preview: **`QuestionBankPreviewModal`**. Question-tab **Standard(s)** and bank filter standards share **`StandardsTypeahead`**.
+
+Sectioned-outline invariants (flat vs fully-sectioned, `page.item` numbering, wrap/flatten, `questionRefs` mirror) live in `lib/assessmentBuilder/outline.ts`.
+
+Canonical schema and runtime helpers live in `types/assessmentBuilder.ts` and `lib/assessmentBuilder/` (adapters, bank/draft `localStorage`, scoring, exam pool draw). Mock fixtures: `data/assessmentBuilder/`. See `src/guidelines/level-types/assessment-builder.md` for routes, UX, and known gaps.
+
+## State Ownership
+
+Route pages get state and handlers from dedicated hooks:
+
+- `useLayoutState` for tab/layout/sidebar width
+- `useAssessmentBuilderState` for loading/updating an `AssessmentArtifact`, resolving bank questions, and draft persistence (assessment builder routes)
+- `useQuestionBank` for upserting `QuestionItem` records to the course bank (`localStorage` in prototype)
+- `useFileWorkspaceState` for selected/open files and file view behavior
+- `useChatState` for Tutor messages/input where the sidebar Tutor is visible. Web Lab 2 and Python Lab pass route-scoped session storage keys so chat history survives reload alongside file workspace state.
+- `useVersionHistoryState` for version selection/save/restore feedback
+- `useSketchLabState` for ReactFlow canvas nodes/edges, selection, and route-scoped `sessionStorage` persistence (Sketch Lab only)
+- `useAiLabState` for algorithm, optional dataset choice, Data / Test section, mutable spreadsheet rows, label/features, local train/test, try-it-out values, KNN k (holdout search in studio, optional `defaultKnnK` lock on guided), and session-local saved model cards (AI Lab only). Current chrome is `AiLabGuidedWorkspace` (a WORKSPACE `PanelHeader` with CADS `SegmentedButton` Data Set / Testing plus an algorithm chip, one setup modal; `DataStudio` renders the dataset header + sheet, a right-hand TRAIN rail of config / Results cards, and a CATEGORY ANALYSIS dock; Testing has an equal-height Input → Output dock. The shared `ModelActions` Scorecard / Save model pair sits in the Data Results card footer and the Test metric strip and opens `ScorecardModal` or `ExportModal` from `ModelInspector.tsx`). Classic three-tab `AiLabWorkspace` remains for pullback. Real CSV datasets run to thousands of rows, so the page memoizes the merged level config on its primitive dev-panel flags (keeping every `useAiLabState` action and derived config referentially stable), `DataSpreadsheet` and the Cards catalog window their rows with `useVirtualRange` (fixed-pitch spacers + memoized row/card components), and the data layer (`lib/aiLab/columnStats.ts`, `knn.ts`) caches per-column summaries and the encoded KNN matrix in `WeakMap`s keyed on the immutable `rows` array. Levelbuilder-style Dev panel flags (`algorithmLock`, `presetDataset`, `workspaceTabs`, train/export/edit/view) are mapped in `lib/aiLab/devConfig.ts`. `showExport` / `showModelDetails` / `allowDataEdit` / `defaultDataView` / `testLayout` are excluded from the session identity so toggling them keeps the trained model.
+- AI Lab Testing visualizations (`ailab/views/viz/`) own step/hover state locally; `TestDashboard` owns the statement strip and the Target/Table or Diagram/Rules view, and passes the trained model, rows, columns, label values, the query, the trace/prediction, and the current view. `DecisionTreeViz` always lays out the full tree; node size (card vs pill) is a pure function of the revealed trace prefix, and the selected node lives in local state and is rendered into `NavigatorCard`'s `detail` slot instead of a tooltip. `KnnViz` memoizes `knnDistances` on a stable query key, renders at most 400 rows in the target view, keeps zoom/pan in a single `Viewport` state object (reset on query change; wheel handled via a native non-passive listener because React registers `wheel` passively), and hosts the shared floating `NavigatorCard` on the target view (hidden on Table; the target centers in the leftover width beside the card). The card has three KNN states — place (feature leaders + dashed slots), measure (muted tally + unlabeled neighbors), vote (colored tally + numbered badges) — with Play/stepper and **See all rows** pinned while the lede and neighbor list scroll. The tree reuses the same chrome. `TraceBar` Play rewinds and walks the trace at 1s per step. Under `AiLabLevelConfig.testLayout: "canvas"` (dev-panel flag; not part of the session identity) `TestDashboard` drops its dock footer and instead passes each viz a `canvasChrome` (`{ outcome, inputCard }`); the viz renders `CanvasCards` (top-left trace toolbar, right-hand column of input card over an end-state prediction card) in place of `NavigatorCard`, keeps step state local, and stays full-bleed: `KnnViz` offsets the target's center by `insetRight={CARD_INSET}` rather than padding, and `DecisionTreeViz` lays out `vertical`, counts the right `CARD_INSET` as covered when scrolling the current node into view, and lights the prediction card's PATH numbers up to the current step. Table / Rules dock that column as a headerless train-rail panel so the sheet fills the leftover width. Readability under wide labels / large k is handled inside the viz, not upstream: `groupLabels` (`labelGroups.ts`) derives the wedge set (top labels + Other) from the label list and vote counts, rows are binned per render into count bubbles keyed by (wedge, distance ring, angular sector) at the current zoom, k > 30 switches to a dense regime (vote arcs instead of spokes/badges; hovering an arc shows the category and its tally), and the card previews 3 neighbors with **See all rows** opening the Table. The hard limits — 50 distinct values for any categorical label/feature, 8 before the label is "crowded" — live in `lib/aiLab/cardinality.ts`; `useAiLabState` exposes them as `labelCardinality` / `featureCardinality` notices and folds the error case into `canTrain` / `trainBlockedReason`.
+- `useElementSize` — ResizeObserver-backed `{ ref, size }` for components that size an SVG stage or a row budget to their container.
+- `useVirtualRange` — generic fixed-pitch windowing for long lists: subscribes to a scroll container's `scroll` / resize, returns the `[start, end)` item window plus top/bottom spacer heights, and a `scrollIntoView(index)` helper. Re-renders the caller only when the window or spacer sizes change.
+- `useBackpackState` / `BackpackProvider` for cross-level Backpack persistence (`localStorage` key `lab2:backpack`). `Lab2Shell` wraps the resource panel and workspace in `BackpackProvider` so file-manager save actions and the Backpack tab share one store. `BackpackProvider` is idempotent — if an ancestor already provides the store it passes through rather than creating a second one, so a page (e.g. `WebLab2LevelPage`, for its agent-library dialogs) can hoist the provider above `Lab2Shell` and keep a single store. `BackpackItem.fileKind` is `FileKind | "agent"`: the `"agent"` kind is a saved custom agent (JSON payload, `lib/backpack/agentBackpack.ts`) that lives only in the backpack + the agent recall sheet, never the project file tree. IDE routes pass `backpackImportLab` and `onImportBackpackItem` into `Sidebar`; per-lab extension allow-lists in `backpackImportAllowlist.ts` gate the **+** import action (unsupported types stay visible with a disabled button and tooltip). Production Backpack panel layout defaults to **type-availability** (50/50 File type dropdown with start icons + text-only Sort dropdown + unsupported-at-bottom). Optional `backpackFilterExperiment` on experiment routes overrides this (`default` legacy source-lab sections, filter pills, supported toggle, dropdown — see Backpack Filtering sample progression). A session CADS `Tag` (**Added**, small, success) appears on that chip after a successful import. Saving from the project file manager raises a viewport CADS `Toast` (`placement="topCenter"`) via `BackpackSaveToasts`. The **Backpack Across Labs** progression (`/levels/progression-backpack-labs-*`) reuses each lab page with `backpackEnsureSeedItems` from `src/data/backpack/crossLabBackpackSeed.ts` so the same HTML/CSS/JS/JSON/Python/docs/images/PDF mix is present in Web Lab, Python, Sketch, and AI Chat. Deleting a backpack item confirms with a CADS `Dialog`, then shows an error `Toast` with **Undo**; the save-success toast uses the same undo action.
+- `ThemeProvider` / `useTheme` for Lab2-scoped light/dark token switching, persisted in session storage (`lab2:theme`). Light/dark markers are applied by `Lab2Shell` below `TopNavigation`. The header itself is pinned: `dark` / `data-theme="Dark"` on the nav, `data-theme="Light"` on the progress indicator, so the page theme toggle does not restyle header chrome. The color sandbox and global nav menu share the same `useTheme()` state.
+
+`useFileWorkspaceState` accepts both single-folder project wrappers and rootless file trees. Rootless trees are used by blank Web Lab projects; new files, folders, and AI proposal additions are inserted at the top level until the user creates their own folders.
+
+Python Lab also uses `useFileWorkspaceState`, with route-scoped session storage for file edits and created files. Its blank standalone route starts from a rootless empty tree while the guided route seeds `main.py`, `README.md`, and drawer instructions from `src/data/pythonlab/projects/default`. Python Lab now also uses `useVersionHistoryState` with route-scoped snapshot storage; selecting a saved snapshot maps the open/selected files onto the historical file tree and renders the editor read-only until the student returns to Current Version.
+
+The shared resource panel supports a standalone Instructions tab, a Backpack tab (after Version History) for cross-level saved files, a Resources tab for contextual student-facing materials, optional floating card chrome via `surfaceVariant: "card"`, and a compact rail mode via `compact`. Assessment and quiz levels pass `showBackpackTab: false` — Backpack is IDE-lab only. When the sidebar is collapsible and no rail tabs are visible, the expand/collapse control is disabled and the panel stays collapsed so an empty rail cannot open a leftover panel (for example AI Tutor on CFU). Resources currently render non-functional cards for associated lesson resources, lab documentation, and available walkthroughs based on booleans passed by the level page. Python Lab also enables the Validation tab, which receives the current editable file tree and deterministic test definitions from page/dev-panel configuration.
+
+Python code execution is isolated behind `components/ide/pythonlab/runtime/pythonRunner.ts`, which starts a Pyodide web worker, streams stdout/stderr back to `PythonWorkspace`, and blocks on interactive stdin through a shared buffer while the console shows a terminal-style input row.
+
+## Tutor Harness
+
+Functional AI Tutor behavior is isolated under `src/lib/tutor`. `WebLab2LevelPage.tsx` calls `tutorClient()` and receives a stable `{ message, saveTitle?, changes }` result used by the existing AI proposal state and AI version-history saves. `PythonLabLevelPage.tsx` calls `pythonTutorClient()`, a guidance-only entry point that can read Python project files and always returns `changes: []`.
+
+The harness first resolves requests as guidance, planning, or edit. Routing favors **small model classifiers** (intent, edit-clarification need, validation-review readiness, instruction guide shape) orchestrated by deterministic hard skips and fast paths — not growing regex synonym lists for student phrasing. See **Routing philosophy** in `src/guidelines/tutor-harness.md`. The student composer stays mode-neutral while Web Lab 2 infers the route and applies Build, Plan, and Help capability gates from route props or dev-panel overrides. Each enabled capability can contribute runner-scoped contract text, so Help addenda reach only guidance, Plan addenda reach only planning, and Build addenda reach only edit/tool-loop code generation. Built-in runner style contracts keep Help, Plan, and Build responses short, concrete, and supportive at generation time. Guidance covers no-edit learning, how-to, and project-navigation questions, and Web Lab 2 uses a Socratic, hint-first communication style across policy presets. Curriculum Web Lab requests also include the resolved instructions Markdown as first-class level context so instruction-help answers can reference the actual directions, not just project files. Routes can opt into Tutor-primary instruction delivery, which derives an inspectable linear or choice-based `InstructionGuide` and a deterministic conversational `TutorOpening` from the same Markdown; page-owned guide state and `instructionCoach.ts` produce hidden `instructionFocus` context so typed conversation preserves the intended instructional move before normal help/debug routing, while the static instructions remain available as the authoritative fallback. Direct implementation phrasing in curriculum levels, including "help me make/update/improve..." or instructions that say to ask Tutor to make a change, still routes to the code-generation path when Build is enabled. Planning creates or revises a Markdown `Plans/PROJECT_PLAN.md` spec before code generation. Edit requests use a staged structured-edit path that analyzes and packs project context, applies atomic HTML/CSS/JS edits to a scratch workspace, validates the result, and runs compact repair passes. A bounded tool-loop runner remains as a fallback for edit requests. See `src/guidelines/tutor-harness.md` for the full request flow and safety model.
+
+Python Lab intentionally bypasses planning/edit/tool-loop routing. Its AI Tutor panel hides the Build/Plan mode selector and proposal actions, while still passing the current editable file tree into the shared context packer. The packer includes Python-specific project metadata such as imports, functions, and classes so debugging answers can refer to concrete files and symbols.
+
+Web Lab 2 adds UI behavior around the harness result through lab-specific orchestration helpers under `components/ide/weblab2`: `useWebLab2TutorFlow` owns functional Tutor proposal state, accept/reject messaging, and build-from-plan requests; `useWebLab2Preview` owns preview path selection, file preview configuration, and preview design-edit gating. If functional Tutor returns code changes for an empty project, the flow applies the proposal, expands the file manager, and switches to preview mode so the generated project is immediately visible. If the only change is `Plans/PROJECT_PLAN.md`, it opens the plan in code view instead of switching to preview. Accepted plan files show a Build plan action in the editor chrome; building from that action switches to preview when code changes are proposed. The Tutor composer is disabled while an AI proposal is pending so the student must accept or reject first.
+
+Web Lab 2 validation experiments can opt into a Tutor review card through a route-provided validation review config. Web Lab routes also choose a Tutor support context: standalone project routes allow broader co-building behavior, while curriculum/validation routes keep instruction breakdown, debugging, concept, and idea requests in guidance unless the student explicitly asks for implementation. Curriculum guidance is scoped to the level's instructions, project code, and latest validation progress, avoiding generic browser/cache/devtools troubleshooting and optional stretch-feature nudges. It also uses a light Socratic disclosure policy for help and hint requests so Tutor gives one focused next check without immediately revealing exact project-only selectors or values. Validation review offers use a model-assisted readiness gate when keyed (`validationReviewIntentClassifier.ts`); clear readiness in chat auto-runs Check My Work without a second button click. Ordinary debug asks stay in the Tutor help flow. The Web Lab 2 dev panel can override the route's plain-language review goals with one Validation requirements line per requirement. When a session Tutor API key is present, the review path sends packed project context and those explicit requirements to an AI evaluator that returns non-spoiler statuses; if no key is present or the AI call fails, the card falls back to the local evidence summary. Validation configs can also opt into effort evidence with `effortPolicy: "none" | "advisory" | "required"` and `minimumChangedFiles`; this compares the current project to the starter and should only block completion for open-ended refinement levels that explicitly require student iteration. AI review results are post-processed with the same effort item so starter-perfect projects cannot bypass required iteration evidence. Partial reviews produce a compact progress snapshot so follow-up hints and debug prompts target the next incomplete criterion rather than already-passed checklist items. Validation routes can also make Continue incumbent on a successful review: the Continue button runs a review and shows **Check my work** until the latest review is likely complete, and successful review cards can surface a Continue action in-chat. The validation progression routes demonstrate photo-carousel debugging, style polish, Promise tracing, and loop debugging without adding those demos to the standard Web Lab 2 example list.
+
+Preview-specific diagnostics live inside `components/ide/weblab2/views/preview-panel`, with transient debug state owned by `Workspace` so the panel can span the full workspace below code/preview/split surfaces. Lab-specific helpers in `components/ide/weblab2/webLab2FileTree.ts` and `components/ide/weblab2/webLab2Uploads.ts` handle Web Lab-specific file tree shaping, starter uploads, shareable upload filtering, inline fixture image hydration, and plan-file detection before data reaches the shared workspace. File previews inject a small runtime into the generated `srcDoc` to relay console output and `fetch`/`XMLHttpRequest` activity back to the workspace-level debug panel, including panel height and the network-block toggle.
+
+## Web Lab 2 specialist agents
+
+Optional `agentConfig?: AgentLevelConfig` on `WebLab2LevelPage` mounts the specialist roster and routes each Tutor turn through the active agent on the existing harness — no second chat pipeline. `useAgentLevelState` (`components/agentic/crew`) derives the active agent's `TutorPolicy`, runner contracts, file-tree filter, write-scope clamp, plan filename, and submit wrapper (switch divider, forced composer mode, orchestrator dispatch parsing). Specialist definitions live in `src/types/agentLab.ts` and `src/data/agentic/`; adapter logic in `src/lib/tutor/agents/`. Saved custom agents use backpack kind `"agent"` (`lib/backpack/agentBackpack.ts`) and never enter the project file tree. See `src/guidelines/level-types/weblab2-agents.md`.
+
+## Empty States
+
+Shared IDE empty-state rendering lives in `src/components/ide/shared/EmptyState.tsx`. It supports the legacy generated illustration, preview illustration, and caller-provided image assets, and switches to a compact horizontal layout when its container height is constrained. Web Lab 2 uses `src/components/ide/weblab2/views/NewProjectEmptyState.tsx` for the workspace-level new-project flow when a functional-history project has never had files; this hides the workspace view switcher and avoids selecting code/preview/split until files exist. Once files have existed, deleting everything or restoring the initial version falls back to the normal empty workspace so prior versions remain reachable. The ordinary editor-level "No files open" state still appears when a non-empty project has no open tabs.
+
+## AI Chat Lab
+
+AI Chat Lab lives under `components/ide/aichatlab/views` because the chat stream, model-configuration column, and published model-card column are lab-specific workspace chrome, not the shared Tutor. `AiChatLabWorkspace.tsx` owns state orchestration while local panel components render config, chat, and published model-card surfaces. Its pages hide the AI Tutor resource-panel tab, render instructions through the shared standalone Instructions tab, and use URL-backed dev controls to toggle the config column, config tabs, individual controls, resource-panel tabs, model selector, Continue button placement, and floating card mode. Floating card sidebars are non-resizable but can collapse to a narrow card rail. When a model card is published, the page hides the resource panel and switches the workspace into a share-style two-column model-card/chat layout.
+
+Model configuration controls use shared UI primitives where possible. The temperature control uses `components/ui/AppSlider.tsx`, the design-system slider primitive that supports range/centered layouts, control buttons, stepper notches, top-row value display, and design-token tones. Prototype defaults, sample rubric data, and AI Chat Lab dev-panel fields live in `pages/aichatlab/aiChatLabPageConfig.ts`; no separate `data/aichatlab` fixture directory exists yet.
+
+## Sketch Lab
+
+Sketch Lab lives under `components/ide/sketchlab/views` on a customized `@xyflow/react` canvas. `SketchLabLevelPage.tsx` composes `Lab2Shell` with Instructions + mock AI Tutor tabs (Version History hidden) and passes canvas state through `useSketchLabState` with route-scoped storage keys. The workspace header exposes **Save sketch** (local JSON download or save to Backpack) and start-over actions; node palette and property panel float over the canvas. Backpack uses `backpackImportLab: "sketch-lab"` (images only) with `importBackpackItemToSketch` wiring image imports onto the canvas. See `src/guidelines/level-types/sketchlab.md`.
+
+## Color Sandbox (design-system tooling)
+
+`pages/design-system/ColorSandboxPage.tsx` is a standalone `@xyflow/react` canvas (route `/design-system/colors`, not in the level index) for workshopping the CodeAI token system. It loads the committed `codeAiColorSystem.json` export via `colorSystemData.ts` into an editable `ColorSystem` document (`collection → family → step` primitive ramps + light/dark semantic tokens). The page persists a single draft to `localStorage` (`lab2:color-sandbox:doc`), and supports editing primitive hexes, remapping semantics per mode, adding/renaming/deleting collections and families, and per-theme rationale comments on semantic tokens (emitted as inline comments in the CSS export; codified vs session status is derived by comparing against the bundled baseline). A read-only mode (default on deployed hosts, off on localhost, toggled via the toolbar lock) hides all edit affordances while keeping inspectors and Export CSS available.
+
+**Live app preview:** When **Apply to app** is enabled in the sandbox toolbar, `lib/colorSandbox/colorSandboxRuntime.ts` resolves the persisted draft into `--ds-*` CSS variable overrides and injects them via a managed `<style>` tag (`:root` / `.dark`). `ThemeProvider` initializes this bridge at app boot and listens for cross-tab `storage` events plus same-tab updates. Preview is opt-in (`lab2:color-sandbox:apply-runtime`) and does not modify committed token files; the sandbox **Export CSS** button downloads prod-shaped `primitiveColors.css` + `colors.css` (via `src/pages/design-system/colorSystemCssExport.ts`) for handoff to the product repo. The runtime injects **resolved semantic values only**.
+
+Light/dark mode in the sandbox toolbar shares `useTheme()` with the global nav hamburger menu (`GlobalNavMenu.tsx`) and `Lab2Shell`.
+
+Runtime app tokens are generated into `src/styles/tokens.css` by `scripts/generate-tokens.mjs`, which resolves the CodeAI ColorSystem through `scripts/colorSystemToCss.mjs` into plain `:root` / `.dark` blocks. Naming matches Figma and the exporter (`semanticTokenCssName` / `semanticExportVarName` — e.g. collapsed `brand-*`, singular `border-*`, flat `selected` / sentiment). See `scripts/tokenMigrationMap.md`.
+
+**Full theming guide:** `src/guidelines/color-theming.md` documents the token cascade, selected-vs-brand roles, naming contract, and sandbox authoring boundaries.
+
+## CADS package bridge
+
+Standalone CADS is **`@moshebari/cads-variables`** and **`@moshebari/cads-react`** on public npm (`^0.2.0`). Do not vendor CADS; do not commit a `file:../cads` rewrite. Route `/design-system/cads` is the component catalog. **`Lab2Shell`** wraps the frame in `components/lab2/CadsLabProvider.tsx` (`CadsProvider baseline={false}` + variables/fonts). Lab2 chrome uses CADS primitives and **CADS Foundations** names (`--background-*`, `--shape-*`, …). CodeMirror syntax colors stay on `--ds-syntax-*`. Migration handoff: `src/guidelines/cads-migration.md`. AI substrate: `cadsManifest`, docs `/llms.txt`, and `.cursor/skills/cads-prototyping`.
+
+## Migration Notes
+
+- Legacy panel paths under `components/panels` are replaced by `components/lab2/resource-panel/views`.
+- Header components moved to `components/ui/header`.
+- Shared atoms moved to `components/ui`.
+- Icon components moved to `components/ui/icons`.
+- Dev tools (annotation overlay, dev panel) moved to `components/lab2/dev`.
+- Deprecated UI pieces (`SaveVersionPopover`, `VersionTag`, `TertiaryIconButton`) are removed.
+
+## Adding New UI
+
+- Add shared code-editor features (file tree, tabs, syntax highlighting) under `components/ide/shared`.
+- Add lab-specific workspace chrome under `components/ide/<labname>/views`.
+- Add sidebar tabs/panel content under `components/lab2/resource-panel/views`.
+- Add Tutor provider/prompt/context/validation changes under `lib/tutor`.
+- Add reusable primitives under `components/ui`.
+- Add icon-only assets under `components/ui/icons`.
+
+## Verification Checklist
+
+- `npm run typecheck`
+- `npm run build`
+- Confirm `App.tsx` imports only from current folders above.

@@ -1,0 +1,411 @@
+import { Alert, Button, CloseIconButton, SegmentedButton, Tooltip } from "@moshebari/cads-react";
+import { FaIcon } from "../../../../ui/icons/FaIcon";
+import type {
+  PreviewConsoleMessage,
+  PreviewDebugTab,
+  PreviewNetworkRequest,
+} from "./types";
+import styles from "./PreviewDebugPanel.module.scss";
+
+interface PreviewDebugPanelProps {
+  activeTab: PreviewDebugTab;
+  consoleMessages: PreviewConsoleMessage[];
+  height: number;
+  isNetworkBlocked: boolean;
+  networkRequests: PreviewNetworkRequest[];
+  selectedNetworkRequestId: string | null;
+  onTabChange: (tab: PreviewDebugTab) => void;
+  onClearAll: () => void;
+  onToggleNetworkBlocked: () => void;
+  onSelectNetworkRequest: (requestId: string) => void;
+  onClose: () => void;
+}
+
+const DEBUG_TABS = [
+  { value: "console", label: "Console", iconName: "terminal" as const },
+  { value: "network", label: "Network", iconName: "globe" as const },
+];
+
+function formatTimestamp(timestamp: string) {
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) return timestamp;
+  return date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+}
+
+function formatRequestTime(timestamp: string) {
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) return timestamp;
+  return date.toLocaleString([], {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+}
+
+function getRequestName(url: string) {
+  if (!url) return "Unknown request";
+
+  try {
+    const parsed = new URL(url, window.location.href);
+    const lastSegment = parsed.pathname.split("/").filter(Boolean).at(-1);
+    return lastSegment || parsed.hostname || url;
+  } catch {
+    const pathPart = url.split(/[?#]/, 1)[0] ?? url;
+    return pathPart.split("/").filter(Boolean).at(-1) || url;
+  }
+}
+
+function getStatusLabel(request: PreviewNetworkRequest) {
+  if (request.status === "pending") return "Pending";
+  if (request.status === "request-error") return "Request failed";
+  const statusText = request.statusText ? ` ${request.statusText}` : "";
+  return `${request.statusCode ?? "Unknown"}${statusText}`;
+}
+
+type StepStatus = "success" | "failure" | "pending";
+
+function getStepIconClass(status: StepStatus) {
+  if (status === "success") return styles.stepIconSuccess;
+  if (status === "pending") return styles.stepIconPending;
+  return styles.stepIconFailure;
+}
+
+function getStepIconName(status: StepStatus) {
+  if (status === "success") return "circle-check";
+  if (status === "pending") return "spinner-third";
+  return "circle-xmark";
+}
+
+function getActivityStepStatus(request: PreviewNetworkRequest): StepStatus {
+  if (request.status === "success") return "success";
+  if (request.status === "pending") return "pending";
+  return "failure";
+}
+
+function getConnectorStatusClass(request: PreviewNetworkRequest) {
+  if (request.status === "success") return styles.connectorsuccess;
+  if (request.status === "pending") return styles.connectorpending;
+  if (request.status === "response-error") return styles.connectorresponseError;
+  return styles.connectorrequestError;
+}
+
+function copyText(value: string) {
+  if (!value) return;
+  void navigator.clipboard?.writeText(value);
+}
+
+function getRequestStepStatus(request: PreviewNetworkRequest): StepStatus {
+  if (request.status === "request-error") return "failure";
+  if (request.status === "pending") return "pending";
+  return "success";
+}
+
+function getResponseStepStatus(request: PreviewNetworkRequest): StepStatus {
+  if (request.status === "success") return "success";
+  if (request.status === "pending") return "pending";
+  return "failure";
+}
+
+function isResponseDisabled(request: PreviewNetworkRequest) {
+  return request.status === "request-error" || request.status === "response-error";
+}
+
+function MetadataField({
+  label,
+  value,
+  isCode = false,
+  copyValue,
+}: {
+  label: string;
+  value: string;
+  isCode?: boolean;
+  copyValue?: string;
+}) {
+  return (
+    <div className={styles.metadataField}>
+      <div className={styles.metadataLabelRow}>
+        <span className={styles.metadataLabel}>{label}</span>
+        {copyValue ? (
+          <Button
+            aria-label={`Copy ${label.toLowerCase()}`}
+            className={styles.copyButton}
+            variant="text"
+            color="tertiary"
+            size="extraSmall"
+            iconOnly
+            startIconName="copy"
+            onClick={() => copyText(copyValue)}
+          />
+        ) : null}
+      </div>
+      <div className={`${styles.metadataValue} ${isCode ? styles.metadataValueCode : ""}`}>
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function EmptyState({
+  iconName,
+  title,
+  description,
+}: {
+  iconName: "terminal" | "globe";
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className={styles.emptyState}>
+      <div className={styles.emptyStateIcon}>
+        <FaIcon name={iconName} size="l" />
+      </div>
+      <h2 className={styles.emptyStateTitle}>{title}</h2>
+      <p className={styles.emptyStateText}>{description}</p>
+    </div>
+  );
+}
+
+export function PreviewDebugPanel({
+  activeTab,
+  consoleMessages,
+  height,
+  isNetworkBlocked,
+  networkRequests,
+  selectedNetworkRequestId,
+  onTabChange,
+  onClearAll,
+  onToggleNetworkBlocked,
+  onSelectNetworkRequest,
+  onClose,
+}: PreviewDebugPanelProps) {
+  const selectedRequest =
+    networkRequests.find((request) => request.id === selectedNetworkRequestId) ??
+    networkRequests[0] ??
+    null;
+
+  const renderHeader = () => (
+    <div className={styles.header}>
+      <div className={styles.headerTabs}>
+        <SegmentedButton
+          size="extraSmall"
+          options={DEBUG_TABS}
+          value={activeTab}
+          onChange={(nextValue) => onTabChange(nextValue as PreviewDebugTab)}
+          aria-label="Debug panel tabs"
+        />
+      </div>
+      <span className={styles.headerLabel}>DEBUG</span>
+      <div className={styles.headerActions}>
+        <Button
+          aria-label="Clear debug output"
+          variant="text"
+          color="tertiary"
+          size="extraSmall"
+          iconOnly
+          startIconName="eraser"
+          onClick={onClearAll}
+          title="Clear debug output"
+        />
+        <CloseIconButton
+          aria-label="Close debug panel"
+          size="extraSmall"
+          color="secondary"
+          onClick={onClose}
+          title="Close debug panel"
+        />
+      </div>
+    </div>
+  );
+
+  const renderConsole = () => (
+    <div className={styles.consolePane}>
+      {consoleMessages.length === 0 ? (
+        <EmptyState
+          iconName="terminal"
+          title="No console output"
+          description="Add console.log() statements to your code to see output here."
+        />
+      ) : (
+        <div className={styles.consoleList} role="log" aria-label="Console output">
+          {consoleMessages.map((message) => (
+            <div
+              key={message.id}
+              className={styles.consoleRow}
+            >
+              <pre className={styles.consoleMessage}>{message.message}</pre>
+              <time className={styles.consoleTime} dateTime={message.timestamp}>
+                {formatTimestamp(message.timestamp)}
+              </time>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  const renderActivityList = () => (
+    <aside className={styles.activityList} aria-label="Network activity">
+      <div className={styles.activityHeader}>
+        <span>Activity</span>
+        <Tooltip
+          title={isNetworkBlocked ? "Unblock network activity" : "Block network activity"}
+          placement="bottom"
+        >
+          <Button
+            aria-label={isNetworkBlocked ? "Unblock network activity" : "Block network activity"}
+            aria-pressed={isNetworkBlocked}
+            className={isNetworkBlocked ? styles.networkBlockButtonActive : ""}
+            variant="outlined"
+            color="secondary"
+            size="extraSmall"
+            iconOnly
+            startIconName="ban"
+            onClick={onToggleNetworkBlocked}
+          />
+        </Tooltip>
+      </div>
+      {networkRequests.length === 0 ? (
+        <p className={styles.activityEmpty}>No activity to show</p>
+      ) : (
+        <div className={styles.activityItems}>
+          {networkRequests.map((request) => {
+            const isSelected = selectedRequest?.id === request.id;
+            return (
+              <button
+                key={request.id}
+                type="button"
+                className={styles.activityItem}
+                aria-pressed={isSelected}
+                onClick={() => onSelectNetworkRequest(request.id)}
+              >
+                <span className={`${styles.radio} ${isSelected ? styles.radioSelected : ""}`}>
+                  {isSelected ? <span className={styles.radioDot} /> : null}
+                </span>
+                <span className={styles.activityName}>{getRequestName(request.url)}</span>
+                <span className={`${styles.stepIcon} ${getStepIconClass(getActivityStepStatus(request))}`}>
+                  <FaIcon name={getStepIconName(getActivityStepStatus(request))} size="s" />
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </aside>
+  );
+
+  const renderRequestCard = (request: PreviewNetworkRequest) => {
+    const stepStatus = getRequestStepStatus(request);
+    return (
+      <section
+        className={`${styles.detailCard} ${
+          isResponseDisabled(request) ? styles.detailCardExpanded : ""
+        }`}
+      >
+        <div className={styles.detailHeader}>
+          <h3>Request</h3>
+          <span className={`${styles.stepIcon} ${getStepIconClass(stepStatus)}`}>
+            <FaIcon name={getStepIconName(stepStatus)} size="s" />
+          </span>
+        </div>
+        <div className={styles.detailBody}>
+          {request.status === "request-error" && request.error ? (
+            <Alert
+              className={styles.detailAlert}
+              sentiment="error"
+              size="extraSmall"
+            >
+              {request.error}
+            </Alert>
+          ) : null}
+          <div className={styles.metadataGrid}>
+            <MetadataField label="Method" value={request.method} />
+            <MetadataField label="Request time" value={formatRequestTime(request.requestTime)} />
+          </div>
+          <MetadataField label="URL" value={request.url || "Unknown URL"} copyValue={request.url} />
+        </div>
+      </section>
+    );
+  };
+
+  const renderResponseCard = (request: PreviewNetworkRequest) => {
+    const stepStatus = getResponseStepStatus(request);
+    const isDisabled = isResponseDisabled(request);
+    return (
+      <section className={`${styles.detailCard} ${isDisabled ? styles.detailCardDisabled : ""}`}>
+        <div className={styles.detailHeader}>
+          <h3>Response</h3>
+          <span className={`${styles.stepIcon} ${getStepIconClass(stepStatus)}`}>
+            <FaIcon name={getStepIconName(stepStatus)} size="s" />
+          </span>
+        </div>
+        {isDisabled ? null : (
+          <div className={styles.detailBody}>
+            <div className={styles.metadataGrid}>
+              <MetadataField label="Status" value={getStatusLabel(request)} />
+              <MetadataField
+                label="Time"
+                value={request.durationMs != null ? `${request.durationMs}ms` : "In progress"}
+              />
+            </div>
+            <MetadataField
+              label="Response data"
+              value={
+                request.status === "pending"
+                  ? "Waiting for response..."
+                  : request.responseBody || "No response body"
+              }
+              isCode
+              copyValue={request.responseBody}
+            />
+          </div>
+        )}
+      </section>
+    );
+  };
+
+  const renderNetwork = () => (
+    <div className={styles.networkPane}>
+      {renderActivityList()}
+      <div className={styles.networkDetails}>
+        {selectedRequest ? (
+          <div
+            className={`${styles.detailCards} ${
+              isResponseDisabled(selectedRequest) ? styles.detailCardsResponseDisabled : ""
+            }`}
+          >
+            {renderRequestCard(selectedRequest)}
+            <div className={`${styles.connector} ${getConnectorStatusClass(selectedRequest)}`} aria-hidden>
+              <span className={`${styles.connectorNode} ${styles.connectorNodeStart}`} />
+              <span className={`${styles.connectorNode} ${styles.connectorNodeEnd}`} />
+            </div>
+            {renderResponseCard(selectedRequest)}
+          </div>
+        ) : (
+          <EmptyState
+            iconName="globe"
+            title="No network activity"
+            description="Network request details will appear here when your app makes API calls."
+          />
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <section
+      className={styles.root}
+      aria-label="Debug panel"
+      style={{ height: `${height}px`, flexBasis: `${height}px` }}
+    >
+      {renderHeader()}
+      {activeTab === "console" ? renderConsole() : renderNetwork()}
+    </section>
+  );
+}

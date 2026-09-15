@@ -1,0 +1,377 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: var(--font-family-main);
+}
+
+/* Card sections — same vocabulary as other Lab2 panels. */
+.card {
+  overflow: hidden;
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  background: var(--background-neutral-primary);
+}
+
+.cardTitle {
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 36px;
+  margin: 0;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border-neutral-primary);
+  background: var(--background-neutral-secondary);
+  color: var(--text-neutral-quaternary);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  margin: 0;
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-neutral-primary);
+}
+
+.fileChecklist {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-sm);
+  cursor: pointer;
+}
+
+.contractText {
+  margin: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-sm);
+  line-height: 1.5;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.footerSpacer {
+  flex: 1;
+}
+
+/* Tools summary (view mode) */
+.toolList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toolRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-body-sm);
+}
+
+.toolRowLabel {
+  flex: 1;
+  color: var(--text-neutral-primary);
+}
+
+.toolGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.toolSubRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 2px;
+}
+
+.toolSubIcon {
+  flex-shrink: 0;
+  color: var(--text-neutral-quaternary);
+}
+
+.toolSubLabel {
+  flex-shrink: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+  line-height: 1.4;
+}
+
+.toolSubDetail {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-xs);
+  line-height: 1.4;
+  text-align: right;
+}
+
+.editToolGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.writeScopePacker {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 12px;
+}
+
+.writeScopeHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.effortField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.effortHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.effortLabelRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.effortInputValue {
+  flex-shrink: 0;
+  color: var(--text-neutral-primary);
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.64;
+}
+
+.effortHelper {
+  margin: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+  line-height: 1.4;
+}
+
+.effortSummary {
+  margin: 0;
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-sm);
+  line-height: 1.5;
+}
+
+.effortValue {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+/* @deprecated — replaced by .toolList */
+.permissionList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.permissionRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-body-sm);
+}
+
+.permissionRowLabel {
+  flex: 1;
+  color: var(--text-neutral-primary);
+}
+
+.permissionNote {
+  margin: 0;
+  padding-left: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+  line-height: 1.4;
+  list-style: none;
+}
+
+.cardIntro {
+  margin: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+  line-height: 1.45;
+}
+
+.filePacker {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-neutral-primary);
+}
+
+.filePackerHint {
+  margin: 0;
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+  line-height: 1.4;
+}
+
+/* Permission toggles (edit mode) — single row uses same toggle styles */
+.toggleList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggleText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.toggleLabel {
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-neutral-primary);
+}
+
+.toggleDescription {
+  font-size: var(--text-body-xs);
+  color: var(--text-neutral-quaternary);
+  line-height: 1.35;
+}
+
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 32px;
+  height: 18px;
+  border-radius: var(--shape-md);
+  background: var(--background-neutral-quaternary);
+  transition: background 0.15s ease;
+
+  input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  input:focus-visible + .switchThumb {
+    outline: 2px solid var(--border-selected-primary);
+    outline-offset: 2px;
+  }
+}
+
+.switchOn {
+  background: var(--background-brand-primary);
+}
+
+.switchDisabled {
+  opacity: 0.5;
+}
+
+.switchThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--background-neutral-primary);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--background-neutral-black-fixed) 20%, transparent);
+  transition: transform 0.15s ease;
+  pointer-events: none;
+}
+
+.switchOn .switchThumb {
+  transform: translateX(14px);
+}
+
+/* Context category rows */
+.contextList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contextRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-body-sm);
+}
+
+.contextRowIcon {
+  flex-shrink: 0;
+  color: var(--text-neutral-quaternary);
+}
+
+.contextRowLabel {
+  flex: 1;
+  color: var(--text-neutral-primary);
+}
+
+.contextRowOn {
+  color: var(--text-success-primary);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.contextRowOff {
+  color: var(--text-neutral-quaternary);
+  font-size: var(--text-body-xs);
+}

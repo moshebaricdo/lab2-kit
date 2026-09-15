@@ -1,0 +1,106 @@
+@use "../../styles/_mixins.scss" as *;
+
+.root {
+  --radio-control-size: 20px;
+  --radio-dot-size: 8px;
+
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 1px;
+  position: relative;
+}
+
+.input {
+  height: var(--radio-control-size);
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  width: var(--radio-control-size);
+}
+
+.control {
+  align-items: center;
+  background: var(--ds-background-neutral-primary);
+  border: 2px solid var(--ds-border-neutral-solid);
+  border-radius: var(--radius-round);
+  display: inline-flex;
+  height: var(--radio-control-size);
+  justify-content: center;
+  width: var(--radio-control-size);
+}
+
+.control::after {
+  background: transparent;
+  border-radius: var(--radius-round);
+  content: "";
+  height: var(--radio-dot-size);
+  transition: background-color 0.12s ease;
+  width: var(--radio-dot-size);
+}
+
+.input:checked + .control {
+  border-color: var(--ds-border-selected-primary);
+}
+
+.input:checked + .control::after {
+  background: var(--ds-background-selected-primary);
+}
+
+.root:hover .input:not(:disabled) + .control,
+.hovered .input:not(:disabled) + .control {
+  background: var(--ds-background-neutral-primary);
+}
+
+.root:hover .input:not(:checked):not(:disabled) + .control,
+.hovered .input:not(:checked):not(:disabled) + .control {
+  border-color: var(--ds-border-neutral-solid);
+}
+
+.root:hover .input:checked:not(:disabled) + .control,
+.hovered .input:checked:not(:disabled) + .control {
+  border-color: var(--ds-border-selected-strong);
+}
+
+.root:hover .input:checked:not(:disabled) + .control::after,
+.hovered .input:checked:not(:disabled) + .control::after {
+  background: var(--ds-background-selected-strong);
+}
+
+.root:active .input:not(:disabled) + .control {
+  background: var(--ds-background-neutral-primary);
+  border-color: var(--ds-border-selected-primary);
+}
+
+.input:focus-visible + .control {
+  @include focus-ring;
+}
+
+.input:disabled + .control {
+  background: var(--ds-background-neutral-primary);
+  border-color: var(--ds-border-disabled-neutral);
+}
+
+.input:disabled:checked + .control::after {
+  background: var(--ds-background-disabled-neutral);
+}
+
+.sizeL {
+  --radio-control-size: 24px;
+  --radio-dot-size: 10px;
+}
+
+.sizeM {
+  --radio-control-size: 20px;
+  --radio-dot-size: 8px;
+}
+
+.sizeS {
+  --radio-control-size: 18px;
+  --radio-dot-size: 8px;
+}
+
+.sizeXs {
+  --radio-control-size: 16px;
+  --radio-dot-size: 7px;
+}

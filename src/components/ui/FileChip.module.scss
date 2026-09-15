@@ -1,0 +1,212 @@
+@use "../../styles/_mixins.scss" as *;
+
+/* Rectangular file chip (Figma: Upload / File) */
+.fileChip {
+  align-items: stretch;
+  background: var(--background-neutral-primary);
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  display: flex;
+  height: 32px;
+  max-width: min(100%, 280px);
+  min-width: 0;
+  overflow: visible;
+  position: relative;
+  transition: border-color 0.15s ease;
+}
+
+.fileChipAdded {
+  border-color: var(--border-selected-primary);
+}
+
+.iconRail {
+  align-items: center;
+  background: var(--background-selected-primary);
+  border-radius: var(--shape-sm) 0 0 var(--shape-sm);
+  display: flex;
+  flex-shrink: 0;
+  height: 100%;
+  justify-content: center;
+  width: 30px;
+}
+
+.iconGlyph {
+  color: var(--text-neutral-primary-inverse);
+  font-size: var(--text-body-sm);
+}
+
+.textBlock {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  gap: 4px;
+  min-width: 0;
+  padding: 0 8px;
+}
+
+.fileName {
+  color: var(--text-neutral-primary);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.extension {
+  color: var(--text-neutral-quaternary);
+  flex-shrink: 0;
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: 1;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Image chip in container (add mode) — mirrors .fileChip layout */
+.imageChipContainer {
+  align-items: stretch;
+  background: var(--background-neutral-primary);
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+  display: flex;
+  height: 32px;
+  max-width: min(100%, 280px);
+  min-width: 0;
+  overflow: visible;
+  position: relative;
+  transition: border-color 0.15s ease;
+}
+
+.imageChipThumb {
+  border-radius: var(--shape-sm) 0 0 var(--shape-sm);
+  flex-shrink: 0;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 32px;
+}
+
+.imageChipThumb img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Square image thumbnail chip (composer / static) */
+.imageChip {
+  border-radius: var(--shape-sm);
+  flex-shrink: 0;
+  height: 32px;
+  overflow: visible;
+  position: relative;
+  width: 32px;
+  transition: box-shadow 0.15s ease;
+}
+
+.imageChipMedia {
+  border-radius: var(--shape-sm);
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.uploadOverlay {
+  background: var(--background-neutral-primary-inverse);
+  border-radius: inherit;
+  inset: 0;
+  opacity: 0.55;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.uploadProgress {
+  align-items: center;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.imageChipAdded {
+  box-shadow: none;
+}
+
+.imageChipImg {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+  border-radius: var(--shape-sm);
+}
+
+/* Remove button — dark circle overlapping top-right (composer only) */
+.actionButton {
+  align-items: center;
+  background: var(--background-neutral-primary-inverse);
+  border: none;
+  border-radius: var(--shape-round);
+  cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  height: 14px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  width: 14px;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.actionButton:hover:not(:disabled) {
+  transform: scale(1.15);
+}
+
+.actionButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.actionButton:focus-visible {
+  @include focus-ring;
+}
+
+.actionIcon {
+  color: var(--text-neutral-primary-inverse);
+  font-size: var(--text-body-xxs);
+}
+
+/* Inline "+ Add" button (inside chip, CADS extraSmall icon-only) */
+.inlineAddButton {
+  align-self: center;
+  margin-right: 3px;
+  margin-left: 3px;
+  flex-shrink: 0;
+}
+
+/* "Added" badge — green circle with check (replaces add button after click) */
+.addedBadge {
+  align-items: center;
+  align-self: center;
+  display: inline-flex;
+  flex-shrink: 0;
+  height: 24px;
+  justify-content: center;
+  margin-right: 3px;
+  margin-left: 3px;
+  width: 24px;
+}
+
+.addedBadgeIcon {
+  color: var(--text-success-primary);
+  font-size: var(--text-body-xs);
+}

@@ -1,0 +1,161 @@
+.root {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  width: 100%;
+  flex: 1;
+  background: var(--background-neutral-primary);
+  container-type: size;
+}
+
+.rootSecondary {
+  background-color: var(--background-neutral-secondary);
+}
+
+.center {
+  display: flex;
+  min-height: 0;
+  width: 100%;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.inner {
+  display: flex;
+  min-height: 0;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 24px;
+}
+
+.contentContainer {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.illustrationGrid {
+  position: relative;
+  display: inline-grid;
+  flex-shrink: 0;
+  grid-template-columns: max-content;
+  grid-template-rows: max-content;
+  line-height: 0;
+  place-items: start;
+}
+
+.imageIllustration {
+  display: block;
+  width: min(400px, 65%);
+  height: auto;
+  flex-shrink: 0;
+}
+
+.textContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.headingWrap {
+  color: var(--text-neutral-primary);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--text-heading-md);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.32;
+}
+
+.descriptionWrap {
+  width: 100%;
+  color: var(--text-neutral-secondary);
+}
+
+.description {
+  margin: 0;
+  font-size: var(--text-body-sm);
+  line-height: 1.48;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+@container (max-height: 320px) {
+  .inner {
+    padding: 8px 16px;
+  }
+
+  .contentContainer {
+    max-width: 560px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .illustrationGrid {
+    width: 178px;
+    height: 138px;
+    overflow: visible;
+    place-items: center;
+  }
+
+  .illustrationGrid > * {
+    transform: scale(0.72);
+    transform-origin: center;
+  }
+
+  .imageIllustration {
+    width: min(220px);
+    transform: translateY(-8px);
+  }
+
+  .textContainer {
+    max-width: 320px;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .actions {
+    justify-content: flex-start;
+    padding-top: 8px;
+  }
+}
+
+@container (max-height: 240px) {
+  .contentContainer {
+    gap: 14px;
+  }
+
+  .illustrationGrid {
+    width: 142px;
+    height: 110px;
+  }
+
+  .illustrationGrid > * {
+    transform: scale(0.58);
+  }
+
+  .imageIllustration {
+    width: min(148px, 34%);
+  }
+}

@@ -1,0 +1,262 @@
+@use "../../styles/_typography.scss" as *;
+
+.root {
+  position: relative;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  min-width: 32px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-body);
+  transition:
+    background-color 0.05s ease-in,
+    border-color 0.05s ease-in,
+    color 0.05s ease-in,
+    transform 0.05s ease-in;
+}
+
+.root:focus-visible {
+  outline: 2px solid var(--ds-border-focused-primary);
+  outline-offset: 2px;
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
+.enabled {
+  cursor: pointer;
+}
+
+.root:active {
+  transform: scale(0.98);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* Sizes (matching design-system button sizes) */
+.sizeL {
+  @include type-heading-h6-semibold;
+
+  height: 48px;
+  min-width: 48px;
+  padding: 8px 16px;
+  gap: 8px;
+}
+
+.sizeM {
+  @include type-body-2-semibold;
+
+  height: 40px;
+  min-width: 40px;
+  padding: 8px 16px;
+  gap: 8px;
+}
+
+.sizeS {
+  @include type-body-3-semibold;
+
+  height: 32px;
+  padding: 4px 12px;
+  gap: 6px;
+}
+
+.sizeXs {
+  @include type-label-3;
+
+  height: 24px;
+  min-height: 24px;
+  min-width: 24px;
+  padding: 2px 8px;
+  gap: 6px;
+}
+
+/* Icon-only size tokens */
+.iconOnly.sizeL {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  padding: 0;
+}
+
+.iconOnly.sizeM {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  padding: 0;
+}
+
+.iconOnly.sizeS {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+}
+
+.iconOnly.sizeXs {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  padding: 0;
+}
+
+/* Variants */
+.primary {
+  border-color: transparent;
+}
+
+.primary.tonePurple {
+  background: var(--ds-background-brand-primary);
+  color: var(--ds-text-neutral-white-fixed);
+}
+
+.primary.tonePurple.enabled:hover {
+  background: var(--ds-background-brand-strong);
+}
+
+.primary.tonePurple.enabled:active {
+  background: var(--ds-background-brand-primary);
+}
+
+.primary.disabled {
+  background: var(--ds-background-disabled-brand);
+  color: var(--ds-text-disabled-neutral-inverse);
+}
+
+.secondary {
+  background: var(--ds-background-neutral-primary);
+}
+
+.secondary.toneBlack {
+  border-color: var(--ds-border-neutral-solid);
+  color: var(--ds-text-neutral-primary);
+}
+
+.secondary.toneGray {
+  border-color: var(--ds-border-neutral-secondary);
+  color: var(--ds-text-neutral-primary);
+}
+
+.secondary.toneWhite {
+  border-color: var(--ds-border-neutral-white-fixed);
+  color: var(--ds-text-neutral-white-fixed);
+}
+
+.secondary.toneWhite.enabled:hover {
+  background: rgb(255 255 255 / 10%);
+}
+
+.secondary.toneWhite.enabled:active {
+  background: rgb(255 255 255 / 20%);
+}
+
+.secondary.enabled:hover {
+  background: var(--ds-background-neutral-tertiary);
+}
+
+.secondary.disabled {
+  border-color: var(--ds-border-disabled-neutral);
+  color: var(--ds-text-disabled-neutral);
+}
+
+.tertiary {
+  border-color: transparent;
+  background: transparent;
+}
+
+.tertiary.tonePurple {
+  color: var(--ds-text-brand-primary);
+}
+
+.tertiary.tonePurple.enabled:hover {
+  background: var(--ds-background-brand-light);
+}
+
+.tertiary.toneBlack {
+  color: var(--ds-text-neutral-primary);
+}
+
+.tertiary.toneWhite {
+  color: var(--ds-text-neutral-white-fixed);
+}
+
+.tertiary.toneWhite.enabled:hover {
+  background: rgb(255 255 255 / 10%);
+}
+
+.tertiary.toneWhite.enabled:active {
+  background: rgb(255 255 255 / 20%);
+}
+
+.tertiary.toneGray {
+  color: var(--ds-text-neutral-quaternary);
+}
+
+.tertiary.enabled:hover {
+  background: var(--ds-background-neutral-quaternary);
+}
+
+.tertiary.enabled:active {
+  background: var(--ds-background-neutral-quaternary);
+}
+
+.tertiary.toneGray.enabled:active {
+  color: var(--ds-text-neutral-tertiary);
+}
+
+.primary.toneTeal {
+  background: var(--ds-background-brand-primary);
+  color: var(--ds-text-neutral-white-fixed);
+}
+
+.primary.toneTeal.enabled:hover {
+  background: var(--ds-background-brand-strong);
+}
+
+.primary.toneTeal.enabled:active {
+  background: var(--ds-background-brand-primary);
+}
+
+.tertiary.toneTeal {
+  color: var(--ds-text-brand-primary);
+}
+
+.tertiary.toneTeal.enabled:hover {
+  background: var(--ds-background-brand-light);
+}
+
+.tertiary.disabled {
+  color: var(--ds-text-disabled-neutral);
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconOnly .iconWrap {
+  width: 16px;
+}
+
+.iconWrap :global(svg) {
+  width: 1em;
+  height: 1em;
+}
+
+.iconWrap [data-fa-icon] {
+  line-height: 1;
+}
+
+.label {
+  margin: 0;
+  white-space: nowrap;
+}

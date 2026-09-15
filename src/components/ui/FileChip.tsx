@@ -1,0 +1,165 @@
+import { Button, Tooltip } from "@moshebari/cads-react";
+import { FaIcon, type FaIconFamily } from "./icons/FaIcon";
+import type { FaBrandIconName } from "../../icons/faBrandsCodepoints";
+import type { FaIconName } from "../../icons/faProRegularCodepoints";
+import { UploadProgressRing } from "./UploadProgressRing";
+import styles from "./FileChip.module.scss";
+
+export interface FileChipProps {
+  /** Shown in the chip title row (ellipsis when long). */
+  fileName: string;
+  /** Native tooltip; defaults to `fileName` (e.g. full path while `fileName` is basename). */
+  nameTitle?: string;
+  /**
+   * Optional inline metadata — extension label (e.g. "HTML") in remove mode,
+   * or timestamp (e.g. "12:56PM") in add mode.
+   */
+  extensionLabel?: string;
+  iconName: FaIconName | FaBrandIconName;
+  iconFamily?: FaIconFamily;
+  /**
+   * `"remove"` shows an X button (pre-send composer chip).
+   * `"add"` shows an inline "+ Add" button inside the chip (sent chat chip).
+   * `"static"` shows no action button (display-only chip).
+   * Defaults to `"remove"`.
+   */
+  mode?: "remove" | "add" | "static";
+  onRemove?: () => void;
+  onAdd?: () => void;
+  /** Visual indicator that the file was already added to the project. */
+  addedToProject?: boolean;
+  disabled?: boolean;
+  /** When set, renders the square image thumbnail variant instead of the file row. */
+  imageSrc?: string | null;
+  onImageError?: () => void;
+  /** When set, shows a circular upload progress indicator (0–100). */
+  uploadProgress?: number;
+}
+
+export function FileChip({
+  fileName,
+  nameTitle,
+  extensionLabel,
+  iconName,
+  iconFamily = "solid",
+  mode = "remove",
+  onRemove,
+  onAdd,
+  addedToProject,
+  disabled,
+  imageSrc,
+  onImageError,
+  uploadProgress,
+}: FileChipProps) {
+  const titleAttr = nameTitle ?? fileName;
+  const metadataLabel = extensionLabel?.trim();
+  const isAdd = mode === "add";
+  const isUploading = uploadProgress !== undefined;
+  const uploadOverlay = isUploading ? (
+    <>
+      <div className={styles.uploadOverlay} aria-hidden />
+      <div className={styles.uploadProgress}>
+        <UploadProgressRing progress={uploadProgress} size={18} />
+      </div>
+    </>
+  ) : null;
+
+  const removeButton = mode === "remove" ? (
+    <button
+      type="button"
+      className={styles.actionButton}
+      disabled={disabled}
+      aria-label={`Remove ${fileName}`}
+      onClick={onRemove}
+    >
+      <FaIcon name="xmark" size="xs" className={styles.actionIcon} />
+    </button>
+  ) : null;
+
+  const addButton = (() => {
+    if (!isAdd) return null;
+    if (addedToProject) {
+      return (
+        <span className={styles.addedBadge} aria-label="Added to project">
+          <FaIcon name="check" size="xs" className={styles.addedBadgeIcon} />
+        </span>
+      );
+    }
+    return (
+      <Tooltip title="Add to project" placement="top">
+        <span>
+          <Button
+            variant="text"
+            color="tertiary"
+            size="extraSmall"
+            iconOnly
+            startIconName="plus"
+            disabled={disabled}
+            aria-label={`Add ${fileName} to project`}
+            onClick={onAdd}
+            className={styles.inlineAddButton}
+          />
+        </span>
+      </Tooltip>
+    );
+  })();
+
+  if (imageSrc && isAdd) {
+    return (
+      <div className={`${styles.imageChipContainer} ${addedToProject ? styles.fileChipAdded : ""}`}>
+        <div className={styles.imageChipThumb}>
+          <img
+            alt=""
+            className={styles.imageChipImg}
+            src={imageSrc}
+            onError={() => onImageError?.()}
+          />
+          {uploadOverlay}
+        </div>
+        {addButton}
+      </div>
+    );
+  }
+
+  if (imageSrc) {
+    return (
+      <div className={`${styles.imageChip} ${addedToProject ? styles.imageChipAdded : ""}`}>
+        <div className={styles.imageChipMedia}>
+          <img
+            alt=""
+            className={styles.imageChipImg}
+            src={imageSrc}
+            onError={() => onImageError?.()}
+          />
+          {uploadOverlay}
+        </div>
+        {removeButton}
+      </div>
+    );
+  }
+
+  return (
+    <div className={`${styles.fileChip} ${addedToProject ? styles.fileChipAdded : ""}`}>
+      <div className={styles.iconRail} aria-hidden="true">
+        {isUploading ? (
+          <UploadProgressRing progress={uploadProgress} size={16} strokeWidth={2} />
+        ) : (
+          <FaIcon
+            family={iconFamily}
+            name={iconName}
+            size="inherit"
+            className={styles.iconGlyph}
+          />
+        )}
+      </div>
+      <div className={styles.textBlock}>
+        <p className={styles.fileName} title={titleAttr}>
+          {fileName}
+        </p>
+        {metadataLabel ? <p className={styles.extension}>{metadataLabel}</p> : null}
+      </div>
+      {removeButton}
+      {addButton}
+    </div>
+  );
+}

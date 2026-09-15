@@ -1,0 +1,296 @@
+.panel {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  width: 226px;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-neutral-primary);
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-md);
+  box-shadow: 0 2px 3px rgb(0 0 0 / 5%);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  padding: 0 10px;
+  background: var(--background-neutral-secondary);
+  border-bottom: 1px solid var(--border-neutral-primary);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.header:active {
+  cursor: grabbing;
+}
+
+// Icon-only close affordance: strip all padding/min-size so it reads as a
+// bare glyph, not a chip.
+.closeButton {
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  cursor: pointer;
+}
+
+// Bare glyph: drop the chip background on hover/active, darken the icon instead.
+.closeButton:hover,
+.closeButton:active {
+  background: transparent !important;
+  color: var(--text-neutral-primary) !important;
+}
+
+.headerLabel {
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-xxs);
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--text-neutral-tertiary);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 10px;
+  border-bottom: 1px solid var(--border-neutral-primary);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-neutral-primary);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 24px;
+}
+
+.rowLabel {
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-xs);
+  color: var(--text-neutral-secondary);
+  white-space: nowrap;
+}
+
+.rowControl {
+  flex: 0 0 auto;
+}
+
+/* Dropdown field width override for the property panel layout */
+.menuField {
+  width: 116px;
+  min-width: 116px;
+}
+
+.swatchDot {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--shape-sm);
+  border: 1px solid var(--border-neutral-primary);
+  box-sizing: border-box;
+}
+
+.swatchDotNone {
+  background-image: linear-gradient(
+    45deg,
+    transparent 45%,
+    var(--background-error-primary) 45%,
+    var(--background-error-primary) 55%,
+    transparent 55%
+  );
+}
+
+.menuItemCheck {
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+.colorMenu {
+  min-width: 0;
+}
+
+/* Color grid */
+.swatchGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 2px;
+}
+
+.swatchButton {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: var(--shape-sm);
+  border: 1px solid var(--border-neutral-primary);
+  cursor: pointer;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swatchButtonSelected {
+  box-shadow: 0 0 0 2px var(--border-selected-primary);
+}
+
+.swatchCustom {
+  position: relative;
+  color: var(--text-neutral-tertiary);
+  background: var(--background-neutral-primary);
+}
+
+.swatchCustomInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.menuDivider {
+  height: 1px;
+  margin-block: 2px;
+  margin-inline: calc(-1 * var(--menu-outer-padding, 2px));
+  background: var(--border-neutral-primary);
+  flex-shrink: 0;
+}
+
+/* Custom value row — inherits xs menu item typography from actionMenu tokens */
+.customInputRow {
+  display: flex;
+  align-items: center;
+  gap: var(--menu-item-gap, 4px);
+  min-height: var(--menu-item-min-height, 22px);
+  padding: var(--menu-item-padding, 3px 6px);
+  font-family: var(--font-family-main);
+  font-size: var(--menu-item-font, var(--text-body-xs));
+  font-weight: var(--font-weight-medium);
+  line-height: 1.54;
+  color: var(--text-neutral-primary);
+}
+
+.customInputLabel {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.customInput {
+  width: 56px;
+  height: 20px;
+  padding: 0 6px;
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.54;
+  color: var(--text-neutral-primary);
+  background: var(--background-neutral-primary);
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+}
+
+.customInput:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 2px var(--border-focused-primary);
+}
+
+/* Rotation menu */
+.rotationMenu {
+  min-width: 188px;
+}
+
+.rotationCustomRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+}
+
+.rotationSlider {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.rotationValueInput {
+  box-sizing: border-box;
+  width: 48px;
+  height: 22px;
+  flex: 0 0 auto;
+  padding: 0 4px;
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.54;
+  text-align: center;
+  color: var(--text-neutral-primary);
+  background: var(--background-neutral-primary);
+  border: 1px solid var(--border-neutral-primary);
+  border-radius: var(--shape-sm);
+}
+
+.rotationValueInput:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 2px var(--border-focused-primary);
+}
+
+/* Actions row */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.actionDelete {
+  margin-left: auto;
+  color: var(--text-error-primary) !important;
+  border-color: var(--border-error-primary) !important;
+}
+
+.actionDelete:hover {
+  color: var(--text-neutral-white-fixed) !important;
+  background: var(--background-error-primary) !important;
+}
+
+.groupItemsButton {
+  width: 100%;
+  justify-content: center;
+}
+
+.multiSelectIconRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.multiSelectIconRow .actionDelete {
+  margin-left: auto;
+}
+
+.altField {
+  width: 100%;
+}

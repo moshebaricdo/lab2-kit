@@ -1,0 +1,240 @@
+import type { ChatMessage, EditOptionsCardData } from "../../types/chat";
+import type { FileItem } from "../../types/file";
+import type { LevelProgressSnapshot } from "../../types/validationReview";
+import type {
+  InstructionFocusContext,
+  TutorRequestMode,
+  TutorSupportContext,
+} from "../../types/tutor";
+import type { TutorRunnerContracts } from "./runners/runnerContracts";
+
+export type TutorFileStatus = "new" | "modified" | "deleted";
+
+export interface TutorPatchEdit {
+  search: string;
+  replace: string;
+  replaceAll?: boolean;
+  reason?: string;
+}
+
+export interface TutorPatchChange {
+  fileName: string;
+  status: TutorFileStatus;
+  content?: string;
+  edits?: TutorPatchEdit[];
+}
+
+export interface TutorPatchResponse {
+  message?: string;
+  saveTitle?: string;
+  changes?: TutorPatchChange[];
+}
+
+export type TutorStructuredEditStrategy = "replace" | "searchReplace" | "delete";
+
+export interface TutorStructuredReplacement {
+  search: string;
+  replace: string;
+  replaceAll?: boolean;
+}
+
+export interface TutorStructuredEdit {
+  path: string;
+  strategy: TutorStructuredEditStrategy;
+  content?: string;
+  replacements?: TutorStructuredReplacement[];
+}
+
+export interface TutorStructuredEditResponse {
+  message?: string;
+  saveTitle?: string;
+  edits?: TutorStructuredEdit[];
+}
+
+export interface TutorGuidanceResponse {
+  message?: string;
+}
+
+export interface TutorRequestIntentResponse {
+  intent?: "guidance" | "planning" | "edit";
+  isConcept?: boolean;
+  asksForAnswer?: boolean;
+  confidence?: "high" | "low";
+  reason?: string;
+}
+
+export interface TutorEditClarificationOptionResponse {
+  id?: string;
+  label?: string;
+  enrichPrompt?: string;
+}
+
+export interface TutorEditClarificationResponse {
+  message?: string;
+  options?: TutorEditClarificationOptionResponse[];
+}
+
+export interface TutorEditClarificationNeedResponse {
+  shouldClarify?: boolean;
+  confidence?: "high" | "low";
+  reason?: string;
+}
+
+export interface TutorValidationReviewIntentResponse {
+  shouldRunReview?: boolean;
+  confidence?: "high" | "low";
+  reason?: string;
+}
+
+export interface TutorEditClarificationResult {
+  message: string;
+  editOptions?: EditOptionsCardData;
+}
+
+/**
+ * One node of a derived instruction guide. Carries both the structural fields
+ * (title/prompt/intent) and the student-facing opening copy (shortLabel/summary)
+ * so a single analysis call describes a step (linear) or focus area (open-ended).
+ */
+export interface TutorInstructionAnalysisStepResponse {
+  title?: string;
+  prompt?: string;
+  /** Linear: observe|inspect|explain|fix|verify|ask-for-help. Open-ended: style-polish|content-choice|debug-focus|concept-focus. */
+  intent?: string;
+  editOriented?: boolean;
+  shortLabel?: string;
+  summary?: string;
+}
+
+/** Consolidated model output: guide shape + opening copy from raw instructions. */
+export interface TutorInstructionAnalysisResponse {
+  mode?: "linear" | "open-ended" | "choice-based";
+  tone?: string;
+  overview?: string;
+  goal?: string;
+  success?: string;
+  firstMove?: string;
+  constraints?: string[];
+  steps?: TutorInstructionAnalysisStepResponse[];
+}
+
+/** Picks which open-ended focus a student message is choosing. */
+export interface TutorInstructionOptionSelectionResponse {
+  optionId?: string;
+  confidence?: "high" | "low";
+  reason?: string;
+}
+
+/** Whether a student reply satisfies the active linear instruction step. */
+export interface TutorInstructionStepSatisfactionResponse {
+  satisfied?: boolean;
+  confidence?: "high" | "low";
+  reason?: string;
+}
+
+export type TutorValidatedChange = {
+  fileName: string;
+  status: TutorFileStatus;
+  content?: string;
+  linesAdded?: number;
+  linesRemoved?: number;
+};
+
+export type TutorValidationResult =
+  | {
+      ok: true;
+      message: string;
+      saveTitle?: string;
+      changes: TutorValidatedChange[];
+    }
+  | {
+      ok: false;
+      errors: string[];
+    };
+
+export type TutorEditResult = {
+  message: string;
+  saveTitle?: string;
+  changes: TutorValidatedChange[];
+};
+
+export interface TutorRequest {
+  message: string;
+  conversation?: ChatMessage[];
+  files: FileItem[];
+  additionalSystemPrompt?: string;
+  runnerContracts?: TutorRunnerContracts;
+  levelInstructionsMarkdown?: string;
+  levelProgress?: LevelProgressSnapshot;
+  instructionFocus?: InstructionFocusContext;
+  requestMode?: TutorRequestMode;
+  supportContext?: TutorSupportContext;
+  /** Target file for the planning runner. Defaults to Plans/PROJECT_PLAN.md. */
+  planningFileName?: string;
+}
+
+export type TutorChatMessageContent =
+  | string
+  | Array<
+      | { type: "text"; text: string }
+      | {
+          type: "image_url";
+          image_url: {
+            url: string;
+            detail?: "auto" | "low" | "high";
+          };
+        }
+    >;
+
+export interface TutorChatMessage {
+  role: "system" | "user";
+  content: TutorChatMessageContent;
+}
+
+export interface TutorToolCall {
+  id: string;
+  type: "function";
+  function: {
+    name: string;
+    arguments: string;
+  };
+}
+
+export interface TutorToolChatMessage {
+  role: "system" | "user" | "assistant" | "tool";
+  content?: TutorChatMessageContent | null;
+  tool_call_id?: string;
+  tool_calls?: TutorToolCall[];
+}
+
+export interface TutorToolDefinition {
+  type: "function";
+  function: {
+    name: string;
+    description: string;
+    parameters: Record<string, unknown>;
+    strict?: boolean;
+  };
+}
+
+export interface TutorToolAssistantMessage {
+  role: "assistant";
+  content?: string | null;
+  tool_calls?: TutorToolCall[];
+}
+
+export interface TutorProjectContextFile {
+  fileName: string;
+  path: string;
+  type: FileItem["type"];
+  content: string;
+}
+
+export interface TutorProjectContext {
+  manifest: Array<{
+    fileName: string;
+    path: string;
+    type: FileItem["type"];
+  }>;
+  files: TutorProjectContextFile[];
+}

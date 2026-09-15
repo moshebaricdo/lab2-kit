@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solar System Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- Left: planet list -->
+  <div id="sidebar">
+    <div class="sidebar-header">
+      <h1>Our Solar System</h1>
+      <p>8 Planets &nbsp;·&nbsp; 1 Star</p>
+    </div>
+    <div id="planet-list"></div>
+    <div class="sidebar-footer">Avg. distance from Earth</div>
+  </div>
+
+  <!-- Center: canvas -->
+  <div id="canvas-wrap">
+    <canvas id="solar-canvas"></canvas>
+    <div class="canvas-hint">Click a planet to explore</div>
+  </div>
+
+  <!-- Right: planet detail -->
+  <div id="info-panel">
+    <div class="info-inner" id="info-inner"></div>
+  </div>
+
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

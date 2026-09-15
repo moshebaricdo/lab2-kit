@@ -1,0 +1,118 @@
+.root {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.contentRow {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.codePanel {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+
+.codePanelFill {
+  flex: 1;
+}
+
+.codePanelFixed {
+  flex-shrink: 0;
+}
+
+.fileManagerRail {
+  width: 158px;
+  flex-shrink: 0;
+}
+
+.fileManagerRailCollapsed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: auto;
+}
+
+.fileManagerContent {
+  width: 100%;
+  height: 100%;
+}
+
+.fileManagerContentEntering {
+  animation: file-manager-drawer-in 220ms ease both;
+}
+
+.fileManagerCollapseOverlay {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 3;
+  overflow: clip;
+  pointer-events: none;
+  background: var(--background-neutral-secondary);
+  animation: file-manager-drawer-out 220ms ease both;
+}
+
+.editorArea {
+  flex: 1;
+  min-width: 0;
+}
+
+.editorAreaCollapsing {
+  animation: editor-area-collapse 220ms ease both;
+}
+
+.editorAreaExpanding {
+  animation: editor-area-expand 220ms ease both;
+}
+
+.previewPanel {
+  flex: 1;
+  min-width: 0;
+}
+
+@keyframes file-manager-drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes file-manager-drawer-out {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes editor-area-collapse {
+  from {
+    transform: translateX(var(--file-manager-width));
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes editor-area-expand {
+  from {
+    transform: translateX(calc(var(--file-manager-width) * -1));
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}

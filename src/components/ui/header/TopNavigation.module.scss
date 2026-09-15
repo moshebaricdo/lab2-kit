@@ -1,0 +1,141 @@
+@use "../../../styles/_typography.scss" as *;
+
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 var(--spacing-p-xs);
+  color-scheme: dark;
+  background: var(--background-brand-primary);
+}
+
+.leftGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-p-xxs);
+  min-width: 0;
+}
+
+.logoWrap {
+  display: flex;
+  align-items: center;
+}
+
+.logoBox {
+  display: block;
+  flex-shrink: 0;
+  width: 142px;
+  height: 24px;
+  padding-right: 12px;
+  box-sizing: content-box;
+}
+
+.centerGroup {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-p-xxs);
+  min-width: 0;
+}
+
+.continueButton {
+  flex-shrink: 0;
+}
+
+.levelHeading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  text-align: right;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.levelHeadingStart {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.leadingActions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-p-xxs);
+
+  :global(button) {
+    --btn-bg: transparent !important;
+    --btn-fg: var(--text-neutral-white-fixed) !important;
+    --btn-border: var(--border-neutral-white-fixed) !important;
+    --btn-bg-hover: rgb(255 255 255 / 10%) !important;
+    --btn-bg-press: rgb(255 255 255 / 20%) !important;
+    --btn-fg-press: var(--text-neutral-white-fixed) !important;
+  }
+}
+
+.title {
+  @include type-body-4-semibold;
+
+  color: var(--text-neutral-white-fixed);
+  margin: 0 0 -2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subtitle {
+  @include type-body-5-regular;
+
+  color: var(--text-neutral-white-fixed);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rightGroup {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.iconGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.userButton {
+  --btn-bg: transparent !important;
+  --btn-fg: var(--text-neutral-white-fixed) !important;
+  --btn-border: var(--border-neutral-white-fixed) !important;
+  --btn-bg-hover: rgb(255 255 255 / 10%) !important;
+  --btn-bg-press: rgb(255 255 255 / 20%) !important;
+  --btn-fg-press: var(--text-neutral-white-fixed) !important;
+}
+
+.rightIconButton {
+  --btn-bg: transparent !important;
+  --btn-fg: var(--text-neutral-white-fixed) !important;
+  --btn-border: transparent !important;
+  --btn-bg-hover: rgb(255 255 255 / 10%) !important;
+  --btn-bg-press: rgb(255 255 255 / 20%) !important;
+  --btn-fg-press: var(--text-neutral-white-fixed) !important;
+}
+
+@media (max-width: 960px) {
+  .helpButton {
+    display: none;
+  }
+}

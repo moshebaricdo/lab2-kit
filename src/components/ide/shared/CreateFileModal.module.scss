@@ -1,0 +1,42 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.description {
+  margin: 0;
+  font-family: var(--font-family-main);
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--leading-body-md);
+  color: var(--text-neutral-tertiary);
+}
+
+.inputRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  /* Room for CADS TextInput focus ring so it doesn't collide with the type field. */
+  padding: 4px;
+  margin: -4px;
+}
+
+.fieldGroup {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fileNameField {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.fileTypeField {
+  flex: 0 0 8.5rem;
+  width: 8.5rem;
+  min-width: 8.5rem;
+}
