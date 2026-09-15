@@ -1,8 +1,10 @@
-# Lab2 Prototype Kit
+# CodeAI Lab2 Prototype Kit
 
-A **starter Lab2 frame** for prototyping Chat Lab, Web Lab 2, Python Lab, and Sketch Lab. It is not the kitchen-sink research garden.
+**Welcome!** This repo serves as a template for the Lab2 UI framework and our existing labs (Web Lab, Python Lab, AI Chat Lab, and Sketch Lab). You can use this as a starting point to explore changes to existing labs and to spin up new labs using the framework. This is not a production repo, nor is tied to our production code in anyway.
 
-CADS (`@moshebari/cads-react` + `@moshebari/cads-variables`) is the source of truth for UI. Web Lab and Python Lab include a working **live Tutor** harness (OpenAI key in Lab Settings).
+**CADS (CodeAI Design System)** is the source of truth for UI in this sandbox. Note that it uses a design-led version of the CADS library and is fully powered by MUI (production lags behind the components/styles you see here). 
+
+**Building AI-powered Lab experiences?** Web Lab and Python Lab already include a functioning **live Tutor** harness (just add an OpenAI key in Lab Settings) which you can extend to explore more AI features in labs.
 
 ## Start from this template
 
