@@ -298,7 +298,7 @@ Runtime app tokens are generated into `src/styles/tokens.css` by `scripts/genera
 
 ## CADS package bridge
 
-Standalone CADS is **`@moshebari/cads-variables`** and **`@moshebari/cads-react`** on public npm (`^0.2.0`). Do not vendor CADS; do not commit a `file:../cads` rewrite. Route `/design-system/cads` is the component catalog. **`Lab2Shell`** wraps the frame in `components/lab2/CadsLabProvider.tsx` (`CadsProvider baseline={false}` + variables/fonts). Lab2 chrome uses CADS primitives and **CADS Foundations** names (`--background-*`, `--shape-*`, …). CodeMirror syntax colors stay on `--ds-syntax-*`. Migration handoff: `src/guidelines/cads-migration.md`. AI substrate: `cadsManifest`, docs `/llms.txt`, and `.cursor/skills/cads-prototyping`.
+Standalone CADS is **`@moshebari/cads-variables`** and **`@moshebari/cads-react`** on public npm (`^0.2.0`). Do not vendor CADS; do not commit a `file:../cads` rewrite. Route `/design-system/cads` is the component catalog. **`Lab2Shell`** wraps the frame in `components/lab2/CadsLabProvider.tsx` (`CadsProvider baseline={false}` + variables/fonts). Lab2 chrome uses CADS primitives and **CADS Foundations** names (`--background-*`, `--shape-*`, …). CodeMirror syntax colors stay on `--ds-syntax-*`. Migration handoff: `src/guidelines/cads-migration.md`. AI substrate: `cadsManifest` and docs `/llms.txt`.
 
 ## Migration Notes
 

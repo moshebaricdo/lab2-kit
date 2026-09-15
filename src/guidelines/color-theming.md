@@ -101,7 +101,7 @@ Installed as `@moshebari/cads-react` / `@moshebari/cads-variables` `^0.2.0`. Cat
 
 **Dark mode:** `useTheme` sets `document.documentElement` `data-theme` and toggles the `.dark` class. CADS requires `.dark` (or `[data-theme='Dark']`) on an ancestor; portaled Dropdown/Tooltip menus render under `body`, so the html `.dark` class is what themes them.
 
-When promoting a color-sandbox export to the platform SoT, copy/merge into `../cads/packages/variables/src/data/codeAiColorSystem.json` and run `pnpm generate:variables` in that repo (or `pnpm figma:sync`). The Lab2 `figma-color-sync` skill remains valid for sandbox-local sync; the cads `tooling/figma-sync` script is the long-term home.
+When promoting a color-sandbox export to the platform SoT, copy/merge into `../cads/packages/variables/src/data/codeAiColorSystem.json` and run `pnpm generate:variables` in that repo (or `pnpm figma:sync`). The cads `tooling/figma-sync` script is the long-term home.
 
 ## Authoring checklist
 

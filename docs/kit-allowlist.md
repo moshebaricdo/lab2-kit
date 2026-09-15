@@ -12,8 +12,9 @@ This file is the extract spec. Paths not listed here should not grow back in as 
 - Tutor: `src/lib/tutor`, `AiTutorPanel`, Lab Settings API key, `tutor-harness.md`
 - Validation lib (Check My Work capability) + harness unit-test fixtures under `src/data/weblab2/projects/validation-*` and `feature-roulette` (fixtures only; no experiment routes)
 - Backpack + version history
-- CADS packages from public npm (`@moshebari/cads-react`, `@moshebari/cads-variables`), `CadsLabProvider`, `.cursor/skills/cads-prototyping`
-- Cursor rules/skills for CADS, experiments, and new labs
+- CADS packages from public npm (`@moshebari/cads-react`, `@moshebari/cads-variables`), `CadsLabProvider`
+- Agent playbook: `AGENTS.md`, `CLAUDE.md`
+- Agent skills in `.claude/skills/`: `add-experiment`, `add-lab-route`, `prepare-commits`
 
 ## Deliberately still in the tree (follow-up)
 
@@ -26,3 +27,4 @@ This file is the extract spec. Paths not listed here should not grow back in as 
 - Experiment/progression **routes** (drawer, file-chip, backpack filter, agentic missions, validation levels)
 - Color/typography sandboxes
 - `docs/status.md` and assessment product docs
+- Garden leftover skills (`add-level-type`, `cads-prototyping`, `docs-sync`, `figma-color-sync`, `implement-figma-screen`, `prototype-qa`, `tutor-harness-change`, `ui-token-audit`) and `.cursor/skills/` as a skills home

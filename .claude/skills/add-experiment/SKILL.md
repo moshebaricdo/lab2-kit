@@ -1,6 +1,6 @@
 ---
 name: add-experiment
-description: Adds a Lab2 experiment — extra route plus a named card on /levels Experiments. Use when the user wants to explore changes to an existing lab, create a demo/sample/test/sandbox level, prototype a new lab or level type, try a variant, spike, or one-off. Do not use when they explicitly ask to edit a canonical Level Types page or to graduate an experiment.
+description: Adds a Lab2 experiment — extra route plus a named card on /levels Experiments. Use when the user wants to explore changes to an existing lab, create a demo/sample/test/sandbox level, prototype a new lab or level type, try a variant, spike, or one-off, or graduate a winning experiment into a canonical Level Type. Do not use when they explicitly ask to edit an existing canonical Level Types page.
 ---
 
 # Add Experiment
@@ -16,14 +16,13 @@ Start here for:
 - a new lab or level-type prototype
 - a variant, spike, or one-off
 
-Skip only if the user explicitly asks to change a canonical Level Types page or to graduate an experiment (`add-level-type`).
+Skip only if the user explicitly asks to change a canonical Level Types page or to graduate an experiment into one.
 
 ## Required reading
 
 1. `src/guidelines/Guidelines.md`
 2. `.cursor/rules/design-system.mdc`
-3. `.cursor/skills/cads-prototyping/SKILL.md` when the experiment adds UI
-4. The closest `src/guidelines/level-types/<lab>.md` (or the nearest existing lab if this is a new type)
+3. The closest `src/guidelines/level-types/<lab>.md` (or the nearest existing lab if this is a new type)
 
 ## Checklist
 
@@ -55,7 +54,15 @@ Skip only if the user explicitly asks to change a canonical Level Types page or 
 
 ## Graduate
 
-If the experiment wins: fold it into the canonical lab (or follow `add-level-type` for a new official type), delete the experiment route, and remove it from `EXPERIMENT_LINKS`.
+If the experiment wins and should become a canonical Level Type:
+
+1. Keep (or move) workspace chrome under `src/components/ide/<lab>/views/` and reuse `src/components/ide/shared/`.
+2. Keep one canonical route in `src/pages/<lab>/` + `App.tsx`.
+3. Add a Level Types card via `levelTypeLinks.ts`. Remove the prototype from `EXPERIMENT_LINKS`.
+4. Add fixtures under `src/data/<lab>/` if needed, and document in `src/guidelines/level-types/<lab>.md`.
+5. Style with CADS + Foundations. Wire Tutor only if the lab should have live AI (`tutor-harness.md`).
+
+If it belongs in an existing lab instead, fold the change into that canonical page, then delete the experiment route and card.
 
 ## Verify
 

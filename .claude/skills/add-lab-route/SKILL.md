@@ -5,7 +5,7 @@ description: Composes a Lab2 route page using the repository's shell, resource-p
 
 # Add Lab Route
 
-For a **demo, prototype, exploration, or one-off**, stop and follow `.cursor/skills/add-experiment/SKILL.md`.
+For a **demo, prototype, exploration, or one-off**, stop and follow the `add-experiment` skill.
 
 This skill is only for composing the page after that decision (or for a confirmed extra canonical sibling).
 
@@ -14,8 +14,7 @@ This skill is only for composing the page after that decision (or for a confirme
 1. `src/guidelines/Guidelines.md`
 2. `src/ARCHITECTURE.md`
 3. `.cursor/rules/design-system.mdc`
-4. `.cursor/skills/cads-prototyping/SKILL.md` when adding UI
-5. The relevant guide in `src/guidelines/level-types/`
+4. The relevant guide in `src/guidelines/level-types/`
 
 ## Workflow
 

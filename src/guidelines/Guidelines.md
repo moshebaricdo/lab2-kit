@@ -197,7 +197,7 @@ Do not reintroduce removed legacy paths or compatibility shims unless there is a
 - **Need Sketch Lab-specific workspace chrome?** -> `src/components/ide/sketchlab/views`
 - **Need AI Chat Lab-specific workspace chrome?** -> `src/components/ide/aichatlab/views`
 - **Need to tune Tutor?** -> `src/lib/tutor` and `src/guidelines/tutor-harness.md`
-- **Need an experiment, demo level, or new-lab prototype?** -> extra route + named card in `src/pages/experimentLinks.ts` (see `.cursor/skills/add-experiment/SKILL.md`)
+- **Need an experiment, demo level, or new-lab prototype?** -> extra route + named card in `src/pages/experimentLinks.ts` (see `.claude/skills/add-experiment/SKILL.md`)
 
 ---
 

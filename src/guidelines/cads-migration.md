@@ -2,7 +2,7 @@
 
 Handoff notes for Lab2 CADS consumption (`@moshebari/cads-react` + `@moshebari/cads-variables` from public npm).
 
-Related: `.cursor/skills/cads-prototyping/SKILL.md`, `color-theming.md`, `/design-system/cads`. This repo consumes published packages, not a sibling checkout.
+Related: `.cursor/rules/design-system.mdc`, `color-theming.md`, `/design-system/cads`. This repo consumes published packages, not a sibling checkout.
 
 ---
 

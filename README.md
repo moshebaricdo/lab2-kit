@@ -55,11 +55,23 @@ CADS catalog: `/design-system/cads`.
 
 ## How to prototype
 
-**Iterate, demo, or prototype** — extra route + named card in `src/pages/experimentLinks.ts` (Experiments on `/levels`). Do not edit a canonical Level Types page for a one-off. Cursor skill: `add-experiment`.
+**Iterate, demo, or prototype** — extra route + named card in `src/pages/experimentLinks.ts` (Experiments on `/levels`). Do not edit a canonical Level Types page for a one-off. Skill: `add-experiment`.
 
-**Graduate a new lab type** — `ide/<lab>/views`, `pages/<lab>`, fixture data, Level Types card. Prototype it as an experiment first. Skill: `add-level-type`.
+**New lab route** — compose from the closest existing page after deciding experiment vs canonical. Skill: `add-lab-route`.
+
+**Graduate a new lab type** — prototype as an experiment first; if it wins, fold it into Level Types (`ide/<lab>/views`, `pages/<lab>`, fixture data, card) and drop the experiment. The `add-experiment` skill covers graduation.
 
 **Save a config try** — Dev Panel → save variant on `/levels` → Promote to code when it should become a real page.
+
+### Agent skills
+
+Workflows for Claude Code, the Claude app, and Cursor live in `.claude/skills/`:
+
+- `add-experiment` — extra route + Experiments card
+- `add-lab-route` — compose a lab page
+- `prepare-commits` — split the working tree into reviewable commits (invoke explicitly)
+
+See `AGENTS.md` (playbook) and `CLAUDE.md` (Claude Code / Claude app entry).
 
 ---
 

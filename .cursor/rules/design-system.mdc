@@ -14,7 +14,7 @@ Bootstrap is already in `src/components/lab2/CadsLabProvider.tsx` (`CadsProvider
 5. Do **not** add new `--ds-*` or local `App*` usage on Lab2 surfaces.
 6. Brand = CTAs / links / primary actions. Selected chrome is not brand fill.
 
-Catalog: `/design-system/cads`. Figma: CodeAI Design System (CADS). Skill: `.cursor/skills/cads-prototyping/SKILL.md`.
+Catalog: `/design-system/cads`. Figma: CodeAI Design System (CADS).
 
 ## Leftover `--ds-*`
 
